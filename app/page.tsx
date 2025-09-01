@@ -85,7 +85,7 @@ export default function SpectraLanding() {
 
       {/* Bouton WhatsApp Fixe */}
       <a
-        href="https://wa.me/212662604587"
+        href="https://wa.me/212708819999"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-30 bg-[#25D366] hover:bg-[#128C7E] text-white rounded-full p-4 shadow-2xl transform hover:scale-110 transition-all duration-300 group"
@@ -125,7 +125,7 @@ export default function SpectraLanding() {
 
           {/* Menu Desktop */}
           <div className="hidden md:flex items-center space-x-8">
-            {["ACCUEIL", "QUI SOMMES-NOUS", "NOS SERVICES", "SECTEURS D'ACTIVITÉ", "CONTACT"].map((item, index) => (
+            {["ACCUEIL", "À PROPOS", "NOS SERVICES", "SECTEURS D'ACTIVITÉ", "CONTACT"].map((item, index) => (
               <a 
                 key={item}
                 href={`#${item.toLowerCase().replace(/\s+/g, '-').replace('é', 'e')}`} 
@@ -138,7 +138,7 @@ export default function SpectraLanding() {
                   e.preventDefault()
                   const sectionMap: { [key: string]: string } = {
                     "ACCUEIL": "home",
-                    "QUI SOMMES-NOUS": "about", 
+                    "À PROPOS": "about", 
                     "NOS SERVICES": "services",
                     "SECTEURS D'ACTIVITÉ": "sectors",
                     "CONTACT": "contact"
@@ -183,7 +183,7 @@ export default function SpectraLanding() {
 
             {/* Items du menu centrés */}
             <div className="space-y-6">
-              {["ACCUEIL", "QUI SOMMES-NOUS", "NOS SERVICES", "SECTEURS D'ACTIVITÉ", "CONTACT"].map((item, index) => (
+              {["ACCUEIL", "À PROPOS", "NOS SERVICES", "SECTEURS D'ACTIVITÉ", "CONTACT"].map((item, index) => (
                 <a 
                   key={item}
                   href={`#${item.toLowerCase().replace(/\s+/g, '-').replace('é', 'e')}`} 
@@ -192,7 +192,7 @@ export default function SpectraLanding() {
                     e.preventDefault()
                     const sectionMap: { [key: string]: string } = {
                       "ACCUEIL": "home",
-                      "QUI SOMMES-NOUS": "about", 
+                      "À PROPOS": "about", 
                       "NOS SERVICES": "services",
                       "SECTEURS D'ACTIVITÉ": "sectors",
                       "CONTACT": "contact"
@@ -310,7 +310,7 @@ export default function SpectraLanding() {
       </section>
 
       {/* Section Qui est SPECTRA - Style moderne #ffe8d6 */}
-      <section className="py-24 bg-gradient-to-br from-[#ffe8d6] via-[#f5dcc7] to-[#ffe8d6] relative overflow-hidden">
+      <section id="about" className="py-24 bg-gradient-to-br from-[#ffe8d6] via-[#f5dcc7] to-[#ffe8d6] relative overflow-hidden">
         <div className="absolute inset-0">
           {/* Éléments décoratifs */}
           <div className="absolute top-10 left-10 w-32 h-32 border-4 border-black/10 rounded-full animate-pulse"></div>
@@ -1193,7 +1193,7 @@ export default function SpectraLanding() {
       </section>
 
       {/* Qui est SPECTRA Section */}
-      <section id="about" className="py-20 bg-gradient-to-br from-[#ddbea9] via-[#c9a96e] to-[#ddbea9] relative overflow-hidden">
+      <section  className="py-20 bg-gradient-to-br from-[#ddbea9] via-[#c9a96e] to-[#ddbea9] relative overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute -top-32 -left-32 w-64 h-64 border-4 border-black/20 rounded-full animate-spin-slow"></div>
           <div className="absolute -bottom-16 -right-16 w-48 h-48 bg-black/10 rounded-full animate-pulse"></div>
