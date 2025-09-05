@@ -1,11 +1,12 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { ChevronDown, Mail, Phone, MapPin, Ear, TrendingUp, Handshake, Monitor, Volume2, Zap, Sparkles, Star, Award, MessageCircle, Menu, X, Linkedin, Youtube } from "lucide-react"
+import { ChevronDown, Mail, Phone, MapPin, Ear, TrendingUp, Handshake, Monitor, Volume2, Zap, Sparkles, Star, Award, MessageCircle, Menu, X, Linkedin, Youtube, Instagram } from "lucide-react"
+import emailjs from "emailjs-com"
 
 export default function SpectraLanding() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -14,6 +15,9 @@ export default function SpectraLanding() {
   const [isReadMoreExpanded, setIsReadMoreExpanded] = useState(false)
   // Modal state for service images
   const [modal, setModal] = useState<{ src: string; title: string } | null>(null)
+  const formRef = useRef<HTMLFormElement>(null)
+  const [loading, setLoading] = useState(false)
+  const [statusMsg, setStatusMsg] = useState<null | { type: "sending" | "success" | "error", text: string }>(null)
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
@@ -30,6 +34,44 @@ export default function SpectraLanding() {
   const openImageModal = (src: string, title: string) => setModal({ src, title })
   // Close modal
   const closeImageModal = () => setModal(null)
+
+  const handleContactSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (!formRef.current) return
+
+    setLoading(true)
+    setStatusMsg({ type: "sending", text: "Envoi du message en cours..." })
+
+    // Set the time field before sending
+    const timeInput = formRef.current.querySelector('input[name="time"]') as HTMLInputElement
+    if (timeInput) {
+      timeInput.value = new Date().toLocaleString()
+    } else {
+      const input = document.createElement("input")
+      input.type = "hidden"
+      input.name = "time"
+      input.value = new Date().toLocaleString()
+      formRef.current.appendChild(input)
+    }
+
+    emailjs.sendForm(
+      "service_0tjq212",
+      "template_wiwldk6",
+      formRef.current,
+      "7shS3CJXIF9EZfuXy"
+    )
+    .then(() => {
+      setStatusMsg({ type: "success", text: "Votre message a été envoyé avec succès !" })
+      setLoading(false)
+      formRef.current?.reset()
+      setTimeout(() => setStatusMsg(null), 4000)
+    })
+    .catch(() => {
+      setStatusMsg({ type: "error", text: "Une erreur est survenue lors de l'envoi du message." })
+      setLoading(false)
+      setTimeout(() => setStatusMsg(null), 4000)
+    })
+  }
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50)
@@ -315,8 +357,7 @@ export default function SpectraLanding() {
           {/* Éléments décoratifs */}
           <div className="absolute top-10 left-10 w-32 h-32 border-4 border-black/10 rounded-full animate-pulse"></div>
           <div className="absolute bottom-10 right-10 w-20 h-20 bg-black/5 rotate-45 animate-spin-slow"></div>
-          <div className="absolute top-1/2 left-20 w-4 h-4 bg-black rounded-full animate-bounce"></div>
-          <div className="absolute top-1/3 right-1/4 w-6 h-6 bg-black rounded-full animate-float opacity-20"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] border border-white/5 rounded-full animate-spin-slow"></div>
           
           {/* Lignes décoratives ponctuées */}
           <div className="absolute bottom-20 left-10 w-32 h-1 border-t-4 border-dotted border-black/20"></div>
@@ -1037,7 +1078,7 @@ export default function SpectraLanding() {
       }
       .animate-scroll-horizontal {
         animation: scroll-horizontal 20s linear infinite;
-      }
+           }
       .animate-scroll-horizontal:hover {
         animation-play-state: paused;
       }
@@ -1056,8 +1097,8 @@ export default function SpectraLanding() {
       <section className="py-24 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
         {/* Éléments décoratifs de fond */}
         <div className="absolute inset-0">
-          <div className="absolute top-20 left-20 w-32 h-32 border-2 border-[#ffe8d6]/20 rounded-full animate-pulse"></div>
-          <div className="absolute bottom-20 right-20 w-40 h-40 bg-[#ffe8d6]/10 rounded-full animate-bounce-slow"></div>
+          <div className="absolute top-20 left-20 w-32 h-32 bg-amber-600 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-20 w-40 h-40 bg-slate-600 rounded-full blur-3xl animate-pulse delay-1000"></div>
           <div className="absolute top-1/2 left-10 w-16 h-16 border border-black/10 rounded-full animate-float"></div>
           <div className="absolute top-1/3 right-1/4 w-20 h-20 bg-black/5 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
         </div>
@@ -1128,7 +1169,7 @@ export default function SpectraLanding() {
                       moment inoubliable
                       {/* Ligne ondulée sous "moment inoubliable" */}
                       <svg className="absolute -bottom-1 left-0 w-full h-2" viewBox="0 0 100 8">
-                        <path d="M0,4 Q25,0 50,4 T100,4" stroke="#fbbf24" strokeWidth="2" fill="none"/>
+                        <path d="M0,4 Q25,0 50,4 T100,4" stroke="rgba(0,0,0,0.4)" strokeWidth="2" fill="none"/>
                       </svg>
                     </span>.
                   </p>
@@ -1165,29 +1206,6 @@ export default function SpectraLanding() {
                 </div>
               </div>
             </div>
-
-            {/* Image à droite avec effets modernes */}
-            <div className="lg:w-1/2 animate-slide-in-right">
-              <div className="relative group">
-                <img
-                  src="/service5.jpeg"
-                  alt="Illustration philosophie événementielle"
-                  className="w-full h-auto rounded-3xl shadow-2xl transform group-hover:scale-105 transition-transform duration-500"
-                />
-                
-                {/* Overlay moderne */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-[#ffe8d6]/20 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
-                {/* Éléments décoratifs autour de l'image */}
-                <div className="absolute -top-6 -left-6 w-16 h-16 border-4 border-[#ffe8d6]/30 rounded-full animate-spin-slow"></div>
-                <div className="absolute -bottom-4 -right-4 w-12 h-12 bg-black/20 rounded-full animate-bounce-slow"></div>
-                <div className="absolute top-1/4 -right-8 w-8 h-8 bg-[#ffe8d6]/40 rounded-full animate-float"></div>
-                
-                {/* Lignes décoratives */}
-                <div className="absolute -bottom-6 left-1/4 w-24 h-1 border-t-4 border-dotted border-[#ffe8d6]/50"></div>
-                <div className="absolute -top-4 right-1/3 w-16 h-1 border-t-4 border-dotted border-black/30"></div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -1215,7 +1233,7 @@ export default function SpectraLanding() {
 
             <div className="lg:w-1/2 animate-slide-in-right">
               <h2 className="text-5xl font-bold text-black mb-8">QUI EST SPECTRA INNOVATION ?</h2>
-              <div className="w-20 h-1 bg-black mb-8 animate-expand-width"></div>
+              <div className="w-20 h-1 bg-black mb-8 sm:mb-12 animate-expand-width"></div>
 
               <p className="text-black text-xl mb-8 leading-relaxed">
                 <span className="font-bold text-2xl">SPECTRA INNOVATION</span> est une agence marocaine spécialisée dans
@@ -1247,13 +1265,11 @@ export default function SpectraLanding() {
         </div>
       </section>
 
-      
-
       {/* Secteurs d'Activité Section */}
       <section id="sectors" className="py-20 bg-gradient-to-br from-black via-gray-900 to-black relative overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-[#ddbea9] to-[#c9a96e] transform skew-x-12 origin-top-right opacity-80 animate-slide-in-right"></div>
-          <div className="absolute bottom-0 left-0 w-1/4 h-1/2 bg-gradient-to-t from-[#ddbea9]/20 to-transparent transform -skew-x-12 animate-slide-in-left"></div>
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-t from-[#ddbea9]/20 to-transparent transform -skew-x-12 animate-slide-in-left"></div>
         </div>
 
         <div className="container mx-auto px-6 relative z-10">
@@ -1269,7 +1285,7 @@ export default function SpectraLanding() {
             ].map((sector, index) => (
               <span
                 key={sector}
-                className="bg-gradient-to-r from-[#ddbea9] to-[#c9a96e] text-black px-8 py-4 rounded-full font-bold hover:from-[#c9a96e] hover:to-[#ddbea9] transition-all duration-300 cursor-pointer transform hover:scale-105 shadow-xl animate-fade-in-up glow-on-hover"
+                className="bg-gradient-to-r from-[#ddbea9] to-[#c9a96e] text-black px-8 py-4 rounded-full font-bold hover:from-[#c9a96e] hover:to-[#ddbea9] transition-all duration-300 cursor-pointer transform hover:scale-105 shadow-xl animate-fade-in-up"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 {sector}
@@ -1383,6 +1399,7 @@ export default function SpectraLanding() {
         
         <div className="container mx-auto px-3 sm:px-6 relative z-10">
           <div className="grid lg:grid-cols-2 gap-8 sm:gap-16">
+            {/* Informations de contact */}
             <div className="animate-slide-in-left">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-6 sm:mb-8">CONTACTEZ-NOUS</h2>
               <div className="w-16 sm:w-20 h-1 bg-black mb-8 sm:mb-12 animate-expand-width"></div>
@@ -1404,7 +1421,7 @@ export default function SpectraLanding() {
                   <div className="w-10 h-10 sm:w-16 sm:h-16 bg-black rounded-full flex items-center justify-center transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-xl">
                     <MapPin className="h-6 w-6 sm:h-8 sm:w-8 text-[#ddbea9]" />
                   </div>
-                  <span className="text-black text-base sm:text-xl font-medium group-hover:text-gray-800 transition-colors">Imm 30 Appt 8 Rue Moulay Ahmed Loukili Hassan - Rabat</span>
+                  <span className="text-black text-base sm:text-xl font-medium group-hover:text-gray-800 transition-colors">imm B  appartement 10   étage 2. Jawharat madina Av maghreb arabi rabat</span>
                 </div>
               </div>
 
@@ -1415,7 +1432,7 @@ export default function SpectraLanding() {
                     href="mailto:spectrainnovationcontact@gmail.com"
                     className="w-9 h-9 sm:w-12 sm:h-12 bg-black rounded-full flex items-center justify-center hover:bg-gray-800 transition-all duration-300 cursor-pointer transform hover:scale-110 shadow-lg animate-fade-in-up group"
                     style={{ animationDelay: '0s' }}
-                    title="Lindin"
+                    title="Likndin"
                   >
                     <Linkedin className="w-4 h-4 sm:w-5 sm:h-5 text-[#ddbea9] group-hover:text-white transition-colors" />
                   </a>
@@ -1453,48 +1470,90 @@ export default function SpectraLanding() {
                     style={{ animationDelay: '0.2s' }}
                     title="Instagram"
                   >
-                    <span className="text-[#ddbea9] text-xs sm:text-sm font-bold group-hover:text-white transition-colors">I</span>
+                    <Instagram className="w-4 h-4 sm:w-5 sm:h-5 text-[#ddbea9] group-hover:text-white transition-colors" />
                   </a>
                 </div>
               </div>
             </div>
 
             <div className="animate-slide-in-right">
-              <form className="space-y-5 sm:space-y-8 bg-white/20 backdrop-blur-sm p-5 sm:p-10 rounded-2xl sm:rounded-3xl shadow-2xl border border-white/30">
+              <form
+                ref={formRef}
+                onSubmit={handleContactSubmit}
+                className="space-y-5 sm:space-y-8 bg-white/20 backdrop-blur-sm p-5 sm:p-10 rounded-2xl sm:rounded-3xl shadow-2xl border border-white/30"
+              >
+                {/* Loading and status messages */}
+                {loading && statusMsg?.type === "sending" && (
+                  <div className="flex items-center justify-center mb-4 text-black">
+                    <svg className="animate-spin h-5 w-5 mr-2 text-black" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/>
+                    </svg>
+                    {statusMsg.text}
+                  </div>
+                )}
+                {statusMsg?.type === "success" && (
+                  <div className="mb-4 text-green-700 bg-green-100 rounded px-3 py-2 text-center font-semibold">
+                    {statusMsg.text}
+                  </div>
+                )}
+                {statusMsg?.type === "error" && (
+                  <div className="mb-4 text-red-700 bg-red-100 rounded px-3 py-2 text-center font-semibold">
+                    {statusMsg.text}
+                  </div>
+                )}
+                {/* ...existing code... */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-                  <Input 
-                    placeholder="Nom" 
-                    className="bg-white/80 border-2 border-transparent focus:border-black focus:bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 text-base sm:text-lg transition-all duration-300 hover-lift" 
+                  <Input
+                    name="nom"
+                    placeholder="Nom"
+                    className="bg-white/80 border-2 border-transparent focus:border-black focus:bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 text-base sm:text-lg transition-all duration-300 hover-lift"
                   />
-                  <Input 
-                    placeholder="Prénom" 
-                    className="bg-white/80 border-2 border-transparent focus:border-black focus:bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 text-base sm:text-lg transition-all duration-300 hover-lift" 
+                  <Input
+                    name="prenom"
+                    placeholder="Prénom"
+                    className="bg-white/80 border-2 border-transparent focus:border-black focus:bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 text-base sm:text-lg transition-all duration-300 hover-lift"
                   />
                 </div>
-                <Input 
-                  type="email" 
-                  placeholder="Email" 
-                  className="bg-white/80 border-2 border-transparent focus:border-black focus:bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 text-base sm:text-lg transition-all duration-300 hover-lift" 
+                <Input
+                  name="email"
+                  type="email"
+                  placeholder="Email"
+                  className="bg-white/80 border-2 border-transparent focus:border-black focus:bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 text-base sm:text-lg transition-all duration-300 hover-lift"
                 />
-                <Input 
-                  placeholder="Sujet" 
-                  className="bg-white/80 border-2 border-transparent focus:border-black focus:bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 text-base sm:text-lg transition-all duration-300 hover-lift" 
+                <Input
+                  name="telephone"
+                  placeholder="Téléphone"
+                  className="bg-white/80 border-2 border-transparent focus:border-black focus:bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 text-base sm:text-lg transition-all duration-300 hover-lift"
                 />
-                <Textarea 
-                  placeholder="Message" 
-                  rows={4} 
-                  className="bg-white/80 border-2 border-transparent focus:border-black focus:bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 text-base sm:text-lg transition-all duration-300 hover-lift resize-none" 
+                <Input
+                  name="sujet"
+                  placeholder="Sujet"
+                  className="bg-white/80 border-2 border-transparent focus:border-black focus:bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 text-base sm:text-lg transition-all duration-300 hover-lift"
                 />
-                <Button className="bg-black text-white hover:bg-gray-800 w-full rounded-lg sm:rounded-xl py-3 sm:py-4 text-base sm:text-lg font-semibold transform hover:scale-105 transition-all duration-300 shadow-xl glow-on-hover">
+                <Textarea
+                  name="message"
+                  placeholder="Message"
+                  rows={4}
+                  className="bg-white/80 border-2 border-transparent focus:border-black focus:bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 text-base sm:text-lg transition-all duration-300 hover-lift resize-none"
+                />
+                {/* Hidden time field, value set on submit */}
+                <input type="hidden" name="time" />
+                <Button
+                  type="submit"
+                  className="bg-black text-white hover:bg-gray-800 w-full rounded-lg sm:rounded-xl py-3 sm:py-4 text-base sm:text-lg font-semibold transform hover:scale-105 transition-all duration-300 shadow-xl glow-on-hover"
+                  disabled={loading}
+                >
                   Envoyer le message
                   <Sparkles className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
                 </Button>
               </form>
             </div>
+            {/* ...existing code... */}
           </div>
         </div>
       </section>
-
+      {/* ...existing code... */}
       {/* Footer */}
       <footer className="bg-gradient-to-br from-black via-gray-900 to-black py-16 relative overflow-hidden">
         <div className="absolute inset-0">
@@ -1556,7 +1615,7 @@ export default function SpectraLanding() {
                 style={{ animationDelay: '0.2s' }}
                 title="Instagram"
               >
-                <span className="text-black text-sm font-bold group-hover:text-gray-800 transition-colors">I</span>
+                <Instagram className="w-5 h-5 text-black group-hover:text-gray-800 transition-colors" />
               </a>
             </div>
           </div>
@@ -1567,7 +1626,7 @@ export default function SpectraLanding() {
                 <p className="text-gray-400 mb-2">
                   © 2025 SPECTRA INNOVATION S.A.R.L. Tous droits réservés.
                 </p>
-                <p className="text-gray-500 text-sm">Adresse   commercial : jawharat madina  imm B  appartement 10. E ème  étage  av maghreb al arabi rabat
+                <p className="text-gray-500 text-sm">Adresse   commercial :imm B  appartement 10   étage 2. Jawharat madina Av maghreb arabi rabat
                 </p>
                 <p className="text-gray-500 text-sm">
                   EMAIL: spectrainnovationcontact@gmail.com - TÉLÉPHONE: +212 7 08 81 99 99
