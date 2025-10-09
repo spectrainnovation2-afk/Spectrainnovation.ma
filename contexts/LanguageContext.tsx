@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 
-type Language = 'fr' | 'en'
+type Language = 'fr' | 'en' | 'ar'
 
 interface LanguageContextType {
   language: Language
@@ -10,6 +10,8 @@ interface LanguageContextType {
   t: (key: string) => string
   translations: any
   isLoading: boolean
+  isRTL: boolean
+  direction: 'ltr' | 'rtl'
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
@@ -31,10 +33,14 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
   const [translations, setTranslations] = useState<any>({})
   const [isLoading, setIsLoading] = useState(true)
 
+  // Determine if current language is RTL
+  const isRTL = language === 'ar'
+  const direction = isRTL ? 'rtl' : 'ltr'
+
   // Initialize language from localStorage immediately (before first render)
   useEffect(() => {
     const savedLanguage = localStorage.getItem('language') as Language
-    const initialLanguage = (savedLanguage && (savedLanguage === 'fr' || savedLanguage === 'en')) ? savedLanguage : 'fr'
+    const initialLanguage = (savedLanguage && (savedLanguage === 'fr' || savedLanguage === 'en' || savedLanguage === 'ar')) ? savedLanguage : 'fr'
     
     // Load translations synchronously on mount
     const loadInitialTranslations = async () => {
@@ -91,7 +97,7 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
   }
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t, translations, isLoading }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, translations, isLoading, isRTL, direction }}>
       {children}
     </LanguageContext.Provider>
   )
