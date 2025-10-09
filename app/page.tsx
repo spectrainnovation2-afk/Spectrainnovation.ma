@@ -7,8 +7,11 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { ChevronDown, Mail, Phone, MapPin, Ear, TrendingUp, Handshake, Monitor, Volume2, Zap, Sparkles, Star, Award, MessageCircle, Menu, X, Linkedin, Youtube, Instagram } from "lucide-react"
 import emailjs from "emailjs-com"
+import { useLanguage } from "@/contexts/LanguageContext"
+import { LanguageSwitcher } from "@/components/LanguageSwitcher"
 
 export default function SpectraLanding() {
+  const { t, isLoading } = useLanguage()
   const [isScrolled, setIsScrolled] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -40,7 +43,7 @@ export default function SpectraLanding() {
     if (!formRef.current) return
 
     setLoading(true)
-    setStatusMsg({ type: "sending", text: "Envoi du message en cours..." })
+    setStatusMsg({ type: "sending", text: t('contact.form.sending') })
 
     // Set the time field before sending
     const timeInput = formRef.current.querySelector('input[name="time"]') as HTMLInputElement
@@ -61,13 +64,13 @@ export default function SpectraLanding() {
       "7shS3CJXIF9EZfuXy"
     )
     .then(() => {
-      setStatusMsg({ type: "success", text: "Votre message a été envoyé avec succès !" })
+      setStatusMsg({ type: "success", text: t('contact.form.success') })
       setLoading(false)
       formRef.current?.reset()
       setTimeout(() => setStatusMsg(null), 4000)
     })
     .catch(() => {
-      setStatusMsg({ type: "error", text: "Une erreur est survenue lors de l'envoi du message." })
+      setStatusMsg({ type: "error", text: t('contact.form.error') })
       setLoading(false)
       setTimeout(() => setStatusMsg(null), 4000)
     })
@@ -93,6 +96,18 @@ export default function SpectraLanding() {
   }, [])
 
  
+
+  // Show loading screen while translations are loading
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-[#ddbea9] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <img src="/logo.png" alt="SPECTRA INNOVATION" className="w-48 h-auto mx-auto opacity-80" />
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-white overflow-x-hidden">
@@ -142,7 +157,7 @@ export default function SpectraLanding() {
         
         {/* Tooltip */}
         <div className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-black text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-          Contactez-nous sur WhatsApp
+          {t('whatsapp.tooltip')}
           <div className="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-black"></div>
         </div>
         
@@ -167,10 +182,16 @@ export default function SpectraLanding() {
 
           {/* Menu Desktop */}
           <div className="hidden md:flex items-center space-x-8">
-            {["ACCUEIL", "À PROPOS", "NOS SERVICES", "SECTEURS D'ACTIVITÉ", "CONTACT"].map((item, index) => (
+            {[
+              { key: "nav.home", section: "home" },
+              { key: "nav.about", section: "about" },
+              { key: "nav.services", section: "services" },
+              { key: "nav.sectors", section: "sectors" },
+              { key: "nav.contact", section: "contact" }
+            ].map((item, index) => (
               <a 
-                key={item}
-                href={`#${item.toLowerCase().replace(/\s+/g, '-').replace('é', 'e')}`} 
+                key={item.key}
+                href={`#${item.section}`} 
                 className="relative text-white hover:text-[#ddbea9] transition-all duration-300 group py-2 px-3 font-medium"
                 style={{ 
                   animationDelay: `${index * 0.1}s`,
@@ -178,20 +199,14 @@ export default function SpectraLanding() {
                 }}
                 onClick={(e) => {
                   e.preventDefault()
-                  const sectionMap: { [key: string]: string } = {
-                    "ACCUEIL": "home",
-                    "À PROPOS": "about", 
-                    "NOS SERVICES": "services",
-                    "SECTEURS D'ACTIVITÉ": "sectors",
-                    "CONTACT": "contact"
-                  }
-                  scrollToSection(sectionMap[item])
+                  scrollToSection(item.section)
                 }}
               >
-                <span className="relative z-10">{item}</span>
+                <span className="relative z-10">{t(item.key)}</span>
                 <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#ddbea9] to-[#c9a96e] group-hover:w-full transition-all duration-300"></div>
               </a>
             ))}
+            <LanguageSwitcher />
           </div>
 
           {/* Bouton Menu Mobile */}
@@ -225,26 +240,30 @@ export default function SpectraLanding() {
 
             {/* Items du menu centrés */}
             <div className="space-y-6">
-              {["ACCUEIL", "À PROPOS", "NOS SERVICES", "SECTEURS D'ACTIVITÉ", "CONTACT"].map((item, index) => (
+              {[
+                { key: "nav.home", section: "home" },
+                { key: "nav.about", section: "about" },
+                { key: "nav.services", section: "services" },
+                { key: "nav.sectors", section: "sectors" },
+                { key: "nav.contact", section: "contact" }
+              ].map((item, index) => (
                 <a 
-                  key={item}
-                  href={`#${item.toLowerCase().replace(/\s+/g, '-').replace('é', 'e')}`} 
+                  key={item.key}
+                  href={`#${item.section}`} 
                   className="block text-2xl font-bold text-white hover:text-[#ddbea9] transition-all duration-300 transform hover:scale-110 text-center py-3"
                   onClick={(e) => {
                     e.preventDefault()
-                    const sectionMap: { [key: string]: string } = {
-                      "ACCUEIL": "home",
-                      "À PROPOS": "about", 
-                      "NOS SERVICES": "services",
-                      "SECTEURS D'ACTIVITÉ": "sectors",
-                      "CONTACT": "contact"
-                    }
-                    scrollToSection(sectionMap[item])
+                    scrollToSection(item.section)
                   }}
                 >
-                  {item}
+                  {t(item.key)}
                 </a>
               ))}
+            </div>
+            
+            {/* Language Switcher in Mobile Menu */}
+            <div className="flex justify-center mt-8">
+              <LanguageSwitcher />
             </div>
             
             {/* Ligne décorative centrée */}
@@ -296,12 +315,12 @@ export default function SpectraLanding() {
           <div className="mb-8 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
             <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white mb-4 leading-none tracking-tight">
               <span className="inline-block relative">
-                SPECTRA
+                {t('hero.title')}
                 <div className="absolute -bottom-2 left-0 w-full h-2 bg-gradient-to-r from-[#ffe8d6] to-[#ddbea9] transform origin-left scale-x-0 animate-expand-width" style={{ animationDelay: '1s' }}></div>
               </span>
             </h1>
             <h2 className="text-4xl md:text-6xl lg:text-7xl font-light text-[#ffe8d6] tracking-wider italic">
-              INNOVATION
+              {t('hero.subtitle')}
             </h2>
           </div>
 
@@ -309,7 +328,7 @@ export default function SpectraLanding() {
           <div className="mb-12 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
             <div className="relative max-w-4xl mx-auto">
               <p className="text-xl md:text-2xl lg:text-3xl text-gray-300 font-light leading-relaxed">
-                L'événementiel au service de vos ambitions
+                {t('hero.tagline')}
               </p>
               {/* Ligne décorative sous le sous-titre */}
               <div className="mt-6 flex justify-center">
@@ -341,7 +360,7 @@ export default function SpectraLanding() {
           <div className="w-[300%] h-13 bg-white shadow-2xl transform -rotate-6 -translate-x-[33%] translate-y-6">
             <div className="flex items-center h-full px-8">
               <div className="whitespace-nowrap text-black font-black text-2xl tracking-wider animate-marquee-ultra-fast">
-                INNOVATION & CRÉATIVITÉ   •   EXCELLENCE & EXPERTISE   •   ÉVÉNEMENTS SUR MESURE   •   SOLUTIONS TECHNIQUES COMPLÈTES   •   PASSION ÉVÉNEMENTIELLE   •   SPECTRA INNOVATION   •   CONNECTING BRANDS TO HUMANS • INNOVATION & CRÉATIVITÉ • EXCELLENCE & EXPERTISE • ÉVÉNEMENTS SUR MESURE • SOLUTIONS TECHNIQUES COMPLÈTES • PASSION ÉVÉNEMENTIELLE • SPECTRA INNOVATION • 
+                {t('hero.marquee')} • {t('hero.marquee')} • 
               </div>
             </div>
           </div>
@@ -393,15 +412,15 @@ export default function SpectraLanding() {
             <div className="lg:w-1/2 animate-slide-in-right">
               <div className="mb-8">
                 <h2 className="text-5xl md:text-6xl font-black text-black mb-4 leading-tight">
-                  QUI EST 
-                  <span className="italic block">SPECTRA ?</span>
+                  {t('about.title')} 
+                  <span className="italic block">{t('about.titleItalic')}</span>
                 </h2>
                 <div className="w-20 h-1 bg-black"></div>
               </div>
 
               <div className="space-y-6">
                 <p className="text-xl text-black font-medium leading-relaxed">
-                  <span className="font-black text-2xl">SPECTRA INNOVATION</span> est une agence de conseil en communication stratégique et créative pilotée par des experts de la marque.
+                  <span className="font-black text-2xl">SPECTRA INNOVATION</span> {t('about.description')}
                 </p>
                 
                 
@@ -410,15 +429,15 @@ export default function SpectraLanding() {
                 <div className="grid grid-cols-3 gap-6 mt-12">
                   <div className="text-center">
                     <div className="text-3xl font-black text-black mb-2">500+</div>
-                    <div className="text-sm text-black/70 font-medium">ÉVÉNEMENTS</div>
+                    <div className="text-sm text-black/70 font-medium">{t('about.stats.events')}</div>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl font-black text-black mb-2">10+</div>
-                    <div className="text-sm text-black/70 font-medium">ANNÉES</div>
+                    <div className="text-sm text-black/70 font-medium">{t('about.stats.years')}</div>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl font-black text-black mb-2">100%</div>
-                    <div className="text-sm text-black/70 font-medium">SATISFACTION</div>
+                    <div className="text-sm text-black/70 font-medium">{t('about.stats.satisfaction')}</div>
                   </div>
                 </div>
 
@@ -427,7 +446,7 @@ export default function SpectraLanding() {
                   className="bg-black text-white hover:bg-gray-800 rounded-full px-8 py-4 text-lg font-bold transform hover:scale-105 transition-all duration-300 shadow-xl mt-8 group cursor-pointer"
                 >
                   <span className="flex items-center">
-                    {isReadMoreExpanded ? 'Voir Moins' : 'Lire Plus'}
+                    {isReadMoreExpanded ? t('about.readLess') : t('about.readMore')}
                     <div className="ml-3 w-6 h-6 bg-white rounded-full flex items-center justify-center">
                       <span className={`text-black text-sm transition-transform duration-300 ${isReadMoreExpanded ? 'rotate-180' : ''}`}>
                         {isReadMoreExpanded ? '↑' : '→'}
@@ -441,21 +460,21 @@ export default function SpectraLanding() {
                   isReadMoreExpanded ? 'max-h-96 opacity-100 mt-8' : 'max-h-0 opacity-0'
                 }`}>
                   <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-6 border border-black/10">
-                    <h4 className="text-2xl font-black text-black mb-4">Notre Histoire</h4>
+                    <h4 className="text-2xl font-black text-black mb-4">{t('about.history.title')}</h4>
                     <p className="text-black/80 leading-relaxed mb-4">
-                      Depuis plus de 10 ans, <strong>SPECTRA INNOVATION</strong> accompagne les entreprises dans la réalisation de leurs événements les plus ambitieux. Notre expertise technique et notre passion pour l'innovation nous permettent de transformer chaque projet en une expérience mémorable.
+                      {t('about.history.text1')}
                     </p>
                     <p className="text-black/80 leading-relaxed mb-4">
-                      Nous combinons <strong>créativité</strong>, <strong>technologie de pointe</strong> et <strong>service personnalisé</strong> pour offrir des solutions sur mesure qui dépassent les attentes de nos clients.
+                      {t('about.history.text2')}
                     </p>
                     <div className="grid md:grid-cols-2 gap-4 mt-6">
                       <div className="bg-black/5 rounded-xl p-4">
-                        <h5 className="font-bold text-black mb-2">🎯 Notre Mission</h5>
-                        <p className="text-sm text-black/70">Connecter les marques aux humains à travers des expériences événementielles exceptionnelles.</p>
+                        <h5 className="font-bold text-black mb-2">{t('about.history.mission.title')}</h5>
+                        <p className="text-sm text-black/70">{t('about.history.mission.text')}</p>
                       </div>
                       <div className="bg-black/5 rounded-xl p-4">
-                        <h5 className="font-bold text-black mb-2">🚀 Notre Vision</h5>
-                        <p className="text-sm text-black/70">Être le partenaire de référence pour l'innovation événementielle au Maroc et en Afrique.</p>
+                        <h5 className="font-bold text-black mb-2">{t('about.history.vision.title')}</h5>
+                        <p className="text-sm text-black/70">{t('about.history.vision.text')}</p>
                       </div>
                     </div>
                   </div>
@@ -488,7 +507,7 @@ export default function SpectraLanding() {
               {/* Titre principal avec ligne jaune stylée */}
               <div className="mb-12">
                 <h2 className="text-5xl md:text-6xl font-black text-black mb-4 leading-tight italic">
-                  NOTRE APPROCHE
+                  {t('approach.title')}
                 </h2>
                 {/* Ligne jaune stylée avec effet pinceau comme dans l'image */}
                 <div className="relative">
@@ -507,15 +526,15 @@ export default function SpectraLanding() {
                   
                   <div className="relative z-10">
                     <h3 className="text-lg font-black text-black mb-4 relative">
-                      #3 TRIBE BRAND
+                      {t('approach.card1.title')}
                       <span className="block relative">
-                        PERSONALITY
+                        {t('approach.card1.subtitle')}
                         {/* Ligne stylée sous PERSONALITY */}
                         <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-black/30 transform -skew-x-12"></div>
                       </span>
                     </h3>
                     <p className="text-sm leading-relaxed font-medium text-black">
-                      Définir pour la marque une personnalité cohérente avec les membres de la tribu pour initier le contact et la connexion
+                      {t('approach.card1.text')}
                     </p>
                   </div>
                 </div>
@@ -529,15 +548,15 @@ export default function SpectraLanding() {
                   
                   <div className="relative z-10">
                     <h3 className="text-lg font-black text-black mb-4 relative">
-                      #4 PURPOSE
+                      {t('approach.card2.title')}
                       <span className="block relative">
-                        ADVOCACY
+                        {t('approach.card2.subtitle')}
                         {/* Cercle stylé autour d'ADVOCACY */}
                         <div className="absolute -top-1 -left-1 w-full h-6 border-2 border-black/20 rounded-full transform rotate-3"></div>
                       </span>
                     </h3>
                     <p className="text-sm leading-relaxed font-medium text-black">
-                      Initier la discussion autour du combat et en devenir leader
+                      {t('approach.card2.text')}
                     </p>
                   </div>
                 </div>
@@ -552,9 +571,9 @@ export default function SpectraLanding() {
                   
                   <div className="relative z-10">
                     <h3 className="text-lg font-black text-black mb-4 relative">
-                      #1 TRIBE
+                      {t('approach.card3.title')}
                       <span className="block relative">
-                        BEHAVIOR
+                        {t('approach.card3.subtitle')}
                         {/* Ligne ondulée stylée sous BEHAVIOR */}
                         <svg className="absolute -bottom-1 left-0 w-full h-2" viewBox="0 0 100 8">
                           <path d="M0,4 Q25,0 50,4 T100,4" stroke="rgba(0,0,0,0.3)" strokeWidth="2" fill="none"/>
@@ -562,7 +581,7 @@ export default function SpectraLanding() {
                       </span>
                     </h3>
                     <p className="text-sm leading-relaxed font-medium text-black">
-                      Comprendre le comportement des membres de la tribu, leurs passions, leurs revendications, leur personnalité...
+                      {t('approach.card3.text')}
                     </p>
                   </div>
                 </div>
@@ -597,7 +616,7 @@ export default function SpectraLanding() {
           {/* Titre principal avec ligne stylée */}
           <div className="text-center mb-20">
             <h2 className="text-6xl md:text-7xl font-black text-black mb-6 leading-tight italic animate-fade-in-up">
-              NOS VALEURS
+              {t('values.title')}
             </h2>
             {/* Ligne stylée ondulée sous le titre */}
             <div className="flex justify-center">
@@ -639,7 +658,7 @@ export default function SpectraLanding() {
               
               <div className="relative">
                 <h3 className="text-3xl md:text-4xl font-black text-black mb-6 group-hover:text-gray-800 transition-colors relative">
-                  CRÉATIVITÉ
+                  {t('values.creativity.title')}
                   {/* Ligne soulignée stylée */}
                   <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-black transform -skew-x-12"></div>
                 </h3>
@@ -651,12 +670,7 @@ export default function SpectraLanding() {
                 <div className="absolute -bottom-2 -left-2 w-8 h-8 bg-black/10 rounded-full animate-float"></div>
                 
                 <p className="text-black text-lg leading-relaxed relative z-10">
-                  Nous façonnons des 
-                  <span className="font-black bg-black/20 px-2 py-1 rounded-lg mx-1 relative">
-                    expériences mémorables
-                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-black rounded-full"></div>
-                  </span>
-                  en imaginant, orchestrant et sublimant chaque détail de vos événements.
+                  {t('values.creativity.text')}
                 </p>
               </div>
             </div>
@@ -677,7 +691,7 @@ export default function SpectraLanding() {
               
               <div className="relative">
                 <h3 className="text-3xl md:text-4xl font-black text-black mb-6 group-hover:text-gray-800 transition-colors relative">
-                  EXCELLENCE
+                  {t('values.excellence.title')}
                   {/* Cercle autour du mot */}
                   <div className="absolute -top-2 -left-2 w-full h-12 border-2 border-black/20 rounded-full transform rotate-6 animate-pulse"></div>
                 </h3>
@@ -689,14 +703,7 @@ export default function SpectraLanding() {
                 <div className="absolute -bottom-3 -right-3 w-8 h-8 bg-black/20 rounded-full animate-pulse"></div>
                 
                 <p className="text-black text-lg leading-relaxed relative z-10">
-                  Notre engagement ne se limite pas à la planification, nous vous garantissons une 
-                  <span className="font-black bg-black/20 px-2 py-1 rounded-lg mx-1 relative">
-                    diversité de prestations
-                    <svg className="absolute -bottom-1 left-0 w-full h-2" viewBox="0 0 100 8">
-                      <path d="M0,4 Q25,0 50,4 T100,4" stroke="rgba(0,0,0,0.4)" strokeWidth="2" fill="none"/>
-                    </svg>
-                  </span>
-                  pour un événement exceptionnel.
+                  {t('values.excellence.text')}
                 </p>
               </div>
             </div>
@@ -718,7 +725,7 @@ export default function SpectraLanding() {
               
               <div className="relative">
                 <h3 className="text-3xl md:text-4xl font-black text-black mb-6 group-hover:text-gray-800 transition-colors relative">
-                  PROXIMITÉ
+                  {t('values.proximity.title')}
                   {/* Ligne ondulée sous le mot */}
                   <svg className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-4" viewBox="0 0 100 12">
                     <path d="M0,6 Q25,2 50,6 T100,6" stroke="rgba(0,0,0,0.4)" strokeWidth="3" fill="none"/>
@@ -732,12 +739,7 @@ export default function SpectraLanding() {
                 <div className="absolute -bottom-1 -left-3 w-6 h-6 bg-black/20 rounded-full animate-float"></div>
                 
                 <p className="text-black text-lg leading-relaxed relative z-10">
-                  Chaque projet pour nous est une 
-                  <span className="font-black bg-black/20 px-2 py-1 rounded-lg mx-1 relative">
-                    opportunité unique
-                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-black rounded-full"></div>
-                  </span>
-                  de créer des souvenirs inoubliables, entièrement adapté à vos besoins.
+                  {t('values.proximity.text')}
                 </p>
               </div>
             </div>
@@ -777,8 +779,8 @@ export default function SpectraLanding() {
     <div className="text-center mb-14">
       <div className="relative inline-block">
         <h2 className="text-4xl md:text-6xl lg:text-8xl font-black text-black mb-2 leading-tight relative text-center">
-          <span className="block w-full text-center">NOS</span>
-          <span className="block italic mb-2 w-full text-center">SERVICES</span>
+          <span className="block w-full text-center">{t('services.title')}</span>
+          <span className="block italic mb-2 w-full text-center">{t('services.titleItalic')}</span>
           {/* Cercles décoratifs autour du titre */}
           <div className="absolute -top-6 -left-6 w-16 h-16 border-2 border-black/20 rounded-full animate-pulse"></div>
           <div className="absolute -bottom-4 -right-4 w-12 h-12 bg-black/10 rounded-full animate-bounce"></div>
@@ -809,7 +811,7 @@ export default function SpectraLanding() {
       </div>
       
       <p className="text-xl md:text-2xl text-black/80 max-w-4xl mx-auto leading-relaxed mt-8">
-        Des solutions techniques complètes pour transformer vos événements en expériences exceptionnelles
+        {t('services.subtitle')}
       </p>
     </div>
 
@@ -830,8 +832,8 @@ export default function SpectraLanding() {
               onClick={() => openImageModal('/service1.jpeg', 'LED Écrans')}
             />
           </div>
-          <h3 className="text-2xl font-black text-white mb-4 group-hover:text-[#ffe8d6] transition-colors text-center">ÉCRANS LED</h3>
-          <p className="text-gray-300 leading-relaxed group-hover:text-white transition-colors mb-2 text-center">Écrans LED géants pour événements, salons, concerts et conférences. Haute luminosité et résolution.</p>
+          <h3 className="text-2xl font-black text-white mb-4 group-hover:text-[#ffe8d6] transition-colors text-center">{t('services.list.ledScreens.title')}</h3>
+          <p className="text-gray-300 leading-relaxed group-hover:text-white transition-colors mb-2 text-center">{t('services.list.ledScreens.description')}</p>
         </div>
       </div>
       {/* ÉCRANS TACTILES, TOTEMS & BORNES INTERACTIFS */}
@@ -855,8 +857,8 @@ export default function SpectraLanding() {
               onClick={() => openImageModal('/service3.jpeg', 'Totems interactifs')}
             />
           </div>
-          <h3 className="text-2xl font-black text-white mb-4 group-hover:text-[#ffe8d6] transition-colors text-center">ÉCRANS TACTILES, TOTEMS & BORNES INTERACTIFS</h3>
-          <p className="text-gray-300 leading-relaxed group-hover:text-white transition-colors mb-2 text-center">Écrans tactiles interactifs, totems et bornes pour stands, salons et animations digitales.</p>
+          <h3 className="text-2xl font-black text-white mb-4 group-hover:text-[#ffe8d6] transition-colors text-center">{t('services.list.touchScreens.title')}</h3>
+          <p className="text-gray-300 leading-relaxed group-hover:text-white transition-colors mb-2 text-center">{t('services.list.touchScreens.description')}</p>
         </div>
       </div>
       {/* STANDS PERSONNALISÉS */}
@@ -874,8 +876,8 @@ export default function SpectraLanding() {
               onClick={() => openImageModal('/service4.jpeg', 'Stands personnalisés')}
             />
           </div>
-          <h3 className="text-2xl font-black text-white mb-4 group-hover:text-[#ffe8d6] transition-colors text-center">STANDS PERSONNALISÉS</h3>
-          <p className="text-gray-300 leading-relaxed group-hover:text-white transition-colors mb-2 text-center">Location et conception de stands personnalisés adaptés à votre image de marque.</p>
+          <h3 className="text-2xl font-black text-white mb-4 group-hover:text-[#ffe8d6] transition-colors text-center">{t('services.list.stands.title')}</h3>
+          <p className="text-gray-300 leading-relaxed group-hover:text-white transition-colors mb-2 text-center">{t('services.list.stands.description')}</p>
         </div>
       </div>
 
@@ -895,8 +897,8 @@ export default function SpectraLanding() {
             />
           </div>
 
-          <h3 className="text-2xl font-black text-white mb-4 group-hover:text-[#ffe8d6] transition-colors text-center">MATÉRIEL ÉVÉNEMENTIEL & CONFÉRENCE</h3>
-          <p className="text-gray-300 leading-relaxed group-hover:text-white transition-colors mb-2 text-center">Location de matériel événementiel, de conférence et de traduction : mobilier, cabines, micros, casques…</p>
+          <h3 className="text-2xl font-black text-white mb-4 group-hover:text-[#ffe8d6] transition-colors text-center">{t('services.list.eventMaterial.title')}</h3>
+          <p className="text-gray-300 leading-relaxed group-hover:text-white transition-colors mb-2 text-center">{t('services.list.eventMaterial.description')}</p>
         </div>
       </div>
       
@@ -922,8 +924,8 @@ export default function SpectraLanding() {
             />
           </div>
          
-          <h3 className="text-2xl font-black text-white mb-4 group-hover:text-[#ffe8d6] transition-colors text-center">OBJETS PUBLICITAIRES & IMPRESSION</h3>
-          <p className="text-gray-300 leading-relaxed group-hover:text-white transition-colors mb-2 text-center">Objets publicitaires, supports personnalisés, impression numérique et offset.</p>
+          <h3 className="text-2xl font-black text-white mb-4 group-hover:text-[#ffe8d6] transition-colors text-center">{t('services.list.advertising.title')}</h3>
+          <p className="text-gray-300 leading-relaxed group-hover:text-white transition-colors mb-2 text-center">{t('services.list.advertising.description')}</p>
         </div>
       </div>
 
@@ -956,8 +958,8 @@ export default function SpectraLanding() {
             />
           </div>
 
-          <h3 className="text-2xl font-black text-white mb-4 group-hover:text-[#ffe8d6] transition-colors text-center">PLANIFICATION D'ÉVÉNEMENTS</h3>
-          <p className="text-gray-300 leading-relaxed group-hover:text-white transition-colors mb-2 text-center">Planification d'événements corporatifs et grand public, gestion de projet de A à Z.</p>
+          <h3 className="text-2xl font-black text-white mb-4 group-hover:text-[#ffe8d6] transition-colors text-center">{t('services.list.planning.title')}</h3>
+          <p className="text-gray-300 leading-relaxed group-hover:text-white transition-colors mb-2 text-center">{t('services.list.planning.description')}</p>
         </div>
       </div>
 
@@ -977,8 +979,8 @@ export default function SpectraLanding() {
             />
            
           </div>
-          <h3 className="text-2xl font-black text-white mb-4 group-hover:text-[#ffe8d6] transition-colors text-center">GESTION DE LA BILLETTERIE</h3>
-          <p className="text-gray-300 leading-relaxed group-hover:text-white transition-colors mb-2 text-center">Gestion de la billetterie pour vos événements, solutions digitales et contrôle d'accès.</p>
+          <h3 className="text-2xl font-black text-white mb-4 group-hover:text-[#ffe8d6] transition-colors text-center">{t('services.list.ticketing.title')}</h3>
+          <p className="text-gray-300 leading-relaxed group-hover:text-white transition-colors mb-2 text-center">{t('services.list.ticketing.description')}</p>
         </div>
       </div>
 
@@ -1005,8 +1007,8 @@ export default function SpectraLanding() {
               onClick={() => openImageModal('/service13.jpeg', 'Éclairage')}
             />
           </div>
-          <h3 className="text-2xl font-black text-white mb-4 group-hover:text-[#ffe8d6] transition-colors text-center">SONORISATION & ÉCLAIRAGE</h3>
-          <p className="text-gray-300 leading-relaxed group-hover:text-white transition-colors mb-2 text-center">Location de matériel de sonorisation, éclairage professionnel et effets spéciaux pour tous vos événements.</p>
+          <h3 className="text-2xl font-black text-white mb-4 group-hover:text-[#ffe8d6] transition-colors text-center">{t('services.list.sound.title')}</h3>
+          <p className="text-gray-300 leading-relaxed group-hover:text-white transition-colors mb-2 text-center">{t('services.list.sound.description')}</p>
         </div>
       </div>
 
@@ -1030,8 +1032,8 @@ export default function SpectraLanding() {
               ))}
             </div>
           </div>
-          <h3 className="text-2xl font-black text-white mb-4 group-hover:text-[#ffe8d6] transition-colors text-center">CHAPITEAUX & DALOTS</h3>
-          <p className="text-gray-300 leading-relaxed group-hover:text-white transition-colors mb-2 text-center">Location de chapiteaux, tentes, dalots et structures pour événements extérieurs.</p>
+          <h3 className="text-2xl font-black text-white mb-4 group-hover:text-[#ffe8d6] transition-colors text-center">{t('services.list.tents.title')}</h3>
+          <p className="text-gray-300 leading-relaxed group-hover:text-white transition-colors mb-2 text-center">{t('services.list.tents.description')}</p>
         </div>
       </div>
     </div>
@@ -1110,8 +1112,8 @@ export default function SpectraLanding() {
               {/* Titre principal avec ligne stylée */}
               <div className="mb-12">
                 <h2 className="text-5xl md:text-6xl font-black text-black mb-6 leading-tight relative">
-                  NOTRE
-                  <span className="block italic">PHILOSOPHIE</span>
+                  {t('philosophy.title')}
+                  <span className="block italic">{t('philosophy.titleItalic')}</span>
                   {/* Ligne stylée ondulée sous le titre */}
                   <div className="absolute -bottom-2 left-0">
                     <svg width="300" height="15" viewBox="0 0 300 15" className="overflow-visible">
@@ -1131,7 +1133,7 @@ export default function SpectraLanding() {
               {/* Sous-titre avec cercle décoratif */}
               <div className="relative mb-8 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
                 <h3 className="text-3xl md:text-4xl font-black text-black mb-6 italic relative">
-                  CRÉATEUR D'ÉMOTIONS
+                  {t('philosophy.subtitle')}
                   {/* Cercle décoratif autour du mot ÉMOTIONS */}
                   <div className="absolute -top-2 right-0 w-32 h-10 border-2 border-[#ffe8d6]/30 rounded-full transform rotate-12 animate-pulse"></div>
                 </h3>
@@ -1141,7 +1143,7 @@ export default function SpectraLanding() {
               <div className="space-y-8 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
                 <div className="relative">
                   <h4 className="text-xl md:text-2xl font-black text-black mb-4 relative">
-                    L'ÉVÉNEMENTIEL AU SERVICE DE VOS AMBITIONS
+                    {t('philosophy.heading')}
                     {/* Ligne soulignée stylée */}
                     <div className="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-black via-[#ffe8d6] to-black transform -skew-x-12"></div>
                   </h4>
@@ -1153,25 +1155,11 @@ export default function SpectraLanding() {
                   <div className="absolute -bottom-2 -left-2 w-12 h-12 bg-black/10 rounded-full animate-pulse"></div>
                   
                   <p className="text-lg text-gray-700 leading-relaxed relative z-10">
-                    L'événementiel est bien plus qu'une simple organisation de manifestations : c'est l'art de
-                    <span className="font-black text-black bg-[#ffe8d6]/30 px-2 py-1 rounded-lg mx-1 relative">
-                      créer des expériences uniques
-                      {/* Petit cercle décoratif */}
-                      <div className="absolute -top-1 -right-1 w-3 h-3 bg-[#ffe8d6] rounded-full"></div>
-                    </span>
-                    qui marquent les esprits et valorisent l'image d'une marque, d'une institution ou d'un produit.
+                    {t('philosophy.text1')}
                   </p>
                   
                   <p className="text-lg text-gray-700 leading-relaxed mt-6 relative z-10">
-                    Notre rôle est d'imaginer, concevoir et mettre en œuvre des solutions techniques et logistiques sur mesure pour transformer
-                    chaque projet en un 
-                    <span className="font-black text-[#f5dcc7] relative">
-                      moment inoubliable
-                      {/* Ligne ondulée sous "moment inoubliable" */}
-                      <svg className="absolute -bottom-1 left-0 w-full h-2" viewBox="0 0 100 8">
-                        <path d="M0,4 Q25,0 50,4 T100,4" stroke="rgba(0,0,0,0.4)" strokeWidth="2" fill="none"/>
-                      </svg>
-                    </span>.
+                    {t('philosophy.text2')}
                   </p>
                 </div>
 
@@ -1183,7 +1171,7 @@ export default function SpectraLanding() {
                       {/* Cercles décoratifs autour */}
                       <div className="absolute -top-2 -right-2 w-6 h-6 border-2 border-black/20 rounded-full animate-spin-slow"></div>
                     </div>
-                    <p className="text-sm font-bold text-black">ANNÉES D'EXPERTISE</p>
+                    <p className="text-sm font-bold text-black">{t('philosophy.stats.expertise')}</p>
                   </div>
                   
                   <div className="text-center relative">
@@ -1192,7 +1180,7 @@ export default function SpectraLanding() {
                       {/* Ligne décorative */}
                       <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-yellow-400"></div>
                     </div>
-                    <p className="text-sm font-bold text-black">ÉVÉNEMENTS CRÉÉS</p>
+                    <p className="text-sm font-bold text-black">{t('philosophy.stats.events')}</p>
                   </div>
                   
                   <div className="text-center relative">
@@ -1201,7 +1189,7 @@ export default function SpectraLanding() {
                       {/* Petit cercle pulsant */}
                       <div className="absolute -top-1 -left-1 w-4 h-4 bg-black/20 rounded-full animate-pulse"></div>
                     </div>
-                    <p className="text-sm font-bold text-black">SATISFACTION</p>
+                    <p className="text-sm font-bold text-black">{t('philosophy.stats.satisfaction')}</p>
                   </div>
                 </div>
               </div>
@@ -1232,24 +1220,21 @@ export default function SpectraLanding() {
             </div>
 
             <div className="lg:w-1/2 animate-slide-in-right">
-              <h2 className="text-5xl font-bold text-black mb-8">QUI EST SPECTRA INNOVATION ?</h2>
+              <h2 className="text-5xl font-bold text-black mb-8">{t('whoIsSpectra.title')}</h2>
               <div className="w-20 h-1 bg-black mb-8 sm:mb-12 animate-expand-width"></div>
 
               <p className="text-black text-xl mb-8 leading-relaxed">
-                <span className="font-bold text-2xl">SPECTRA INNOVATION</span> est une agence marocaine spécialisée dans
-                l'événementiel. Forte d'une expérience dans toutes les étapes d'organisation de vos événements partout
-                au Maroc. Notre engagement est de vous offrir des solutions personnalisées et des activités sur mesure
-                pour votre événement.
+                <span className="font-bold text-2xl">SPECTRA INNOVATION</span> {t('whoIsSpectra.description')}
               </p>
 
               <div className="grid grid-cols-2 gap-6 mb-8">
                 <div className="text-center p-6 bg-black/10 rounded-2xl backdrop-blur-sm hover-lift">
                   <h4 className="text-3xl font-bold text-black mb-2">10+</h4>
-                  <p className="text-black font-medium">Années d'expérience</p>
+                  <p className="text-black font-medium">{t('whoIsSpectra.stats.experience')}</p>
                 </div>
                 <div className="text-center p-6 bg-black/10 rounded-2xl backdrop-blur-sm hover-lift">
                   <h4 className="text-3xl font-bold text-black mb-2">500+</h4>
-                  <p className="text-black font-medium">Événements réalisés</p>
+                  <p className="text-black font-medium">{t('whoIsSpectra.stats.events')}</p>
                 </div>
               </div>
 
@@ -1257,7 +1242,7 @@ export default function SpectraLanding() {
                 onClick={() => scrollToSection('about')}
                 className="bg-black text-white hover:bg-gray-800 rounded-full px-10 py-4 text-lg font-semibold transform hover:scale-105 transition-all duration-300 shadow-2xl glow-on-hover cursor-pointer"
               >
-                En savoir plus
+                {t('whoIsSpectra.learnMore')}
                 <Sparkles className="ml-2 w-5 h-5" />
               </Button>
             </div>
@@ -1274,23 +1259,22 @@ export default function SpectraLanding() {
 
         <div className="container mx-auto px-6 relative z-10">
           <h2 className="text-5xl font-bold text-[#ddbea9] mb-16 text-center italic animate-fade-in-up tracking-wider">
-            NOS SECTEURS D'ACTIVITÉ
+            {t('sectors.title')}
           </h2>
 
           <div className="flex flex-wrap justify-center gap-6">
-            {[
-              "CONGRÈS", "SALONS PROFESSIONNELS", "LANCEMENTS PRODUITS", "CÉRÉMONIES",
-              "ÉVÉNEMENTS GRAND PUBLIC", "SÉMINAIRES", "CONFÉRENCES DE PRESSE", "PROMOTIONS",
-              "EXPOSITIONS", "ÉVÉNEMENTS SPORTIFS", "ÉVÉNEMENTS CULTURELS", "ÉVÉNEMENTS CORPORATIFS"
-            ].map((sector, index) => (
-              <span
-                key={sector}
-                className="bg-gradient-to-r from-[#ddbea9] to-[#c9a96e] text-black px-8 py-4 rounded-full font-bold hover:from-[#c9a96e] hover:to-[#ddbea9] transition-all duration-300 cursor-pointer transform hover:scale-105 shadow-xl animate-fade-in-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                {sector}
-              </span>
-            ))}
+            {(() => {
+              const sectorsList = t('sectors.list')
+              return Array.isArray(sectorsList) && sectorsList.map((sector: string, index: number) => (
+                <span
+                  key={sector}
+                  className="bg-gradient-to-r from-[#ddbea9] to-[#c9a96e] text-black px-8 py-4 rounded-full font-bold hover:from-[#c9a96e] hover:to-[#ddbea9] transition-all duration-300 cursor-pointer transform hover:scale-105 shadow-xl animate-fade-in-up"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  {sector}
+                </span>
+              ))
+            })()}
           </div>
 
           <div className="mt-16 text-center">
@@ -1299,7 +1283,7 @@ export default function SpectraLanding() {
               className="bg-gradient-to-r from-[#ddbea9] to-[#c9a96e] text-black hover:from-[#c9a96e] hover:to-[#ddbea9] rounded-full px-12 py-4 text-lg font-semibold transform hover:scale-105 transition-all duration-300 shadow-2xl animate-fade-in-up cursor-pointer" 
               style={{ animationDelay: '1.2s' }}
             >
-              Voir tous nos projets
+              {t('sectors.cta')}
               <Star className="ml-2 w-5 h-5" />
             </Button>
           </div>
@@ -1319,7 +1303,7 @@ export default function SpectraLanding() {
     {/* Titre avec animation */}
     <div className="text-center mb-16 animate-fade-in">
       <h2 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-black from-slate-800 via-amber-800 to-slate-800 mb-6 relative">
-        NOS PARTENAIRES
+        {t('partners.title')}
         <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 flex items-center gap-2">
           <div className="w-16 h-1 bg-gradient-to-r from-transparent via-amber-600 to-transparent animate-pulse"></div>
           <div className="w-2 h-2 bg-black rounded-full animate-bounce"></div>
@@ -1328,7 +1312,7 @@ export default function SpectraLanding() {
       </h2>
       
       <p className="text-lg text-slate-600 max-w-2xl mx-auto mt-8">
-        Découvrez nos partenaires de confiance qui nous accompagnent dans notre mission d'excellence
+        {t('partners.subtitle')}
       </p>
     </div>
 
@@ -1401,7 +1385,7 @@ export default function SpectraLanding() {
           <div className="grid lg:grid-cols-2 gap-8 sm:gap-16">
             {/* Informations de contact */}
             <div className="animate-slide-in-left">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-6 sm:mb-8">CONTACTEZ-NOUS</h2>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-6 sm:mb-8">{t('contact.title')}</h2>
               <div className="w-16 sm:w-20 h-1 bg-black mb-8 sm:mb-12 animate-expand-width"></div>
 
               <div className="space-y-5 sm:space-y-8">
@@ -1426,7 +1410,7 @@ export default function SpectraLanding() {
               </div>
 
               <div className="mt-8 sm:mt-12">
-                <h3 className="text-xl sm:text-2xl font-bold text-black mb-4 sm:mb-6">Suivez-nous</h3>
+                <h3 className="text-xl sm:text-2xl font-bold text-black mb-4 sm:mb-6">{t('contact.followUs')}</h3>
                 <div className="flex space-x-3 sm:space-x-4">
                   <a 
                     href="mailto:spectrainnovationcontact@gmail.com"
@@ -1506,34 +1490,34 @@ export default function SpectraLanding() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                   <Input
                     name="nom"
-                    placeholder="Nom"
+                    placeholder={t('contact.form.firstName')}
                     className="bg-white/80 border-2 border-transparent focus:border-black focus:bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 text-base sm:text-lg transition-all duration-300 hover-lift"
                   />
                   <Input
                     name="prenom"
-                    placeholder="Prénom"
+                    placeholder={t('contact.form.lastName')}
                     className="bg-white/80 border-2 border-transparent focus:border-black focus:bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 text-base sm:text-lg transition-all duration-300 hover-lift"
                   />
                 </div>
                 <Input
                   name="email"
                   type="email"
-                  placeholder="Email"
+                  placeholder={t('contact.form.email')}
                   className="bg-white/80 border-2 border-transparent focus:border-black focus:bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 text-base sm:text-lg transition-all duration-300 hover-lift"
                 />
                 <Input
                   name="telephone"
-                  placeholder="Téléphone"
+                  placeholder={t('contact.form.phone')}
                   className="bg-white/80 border-2 border-transparent focus:border-black focus:bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 text-base sm:text-lg transition-all duration-300 hover-lift"
                 />
                 <Input
                   name="sujet"
-                  placeholder="Sujet"
+                  placeholder={t('contact.form.subject')}
                   className="bg-white/80 border-2 border-transparent focus:border-black focus:bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 text-base sm:text-lg transition-all duration-300 hover-lift"
                 />
                 <Textarea
                   name="message"
-                  placeholder="Message"
+                  placeholder={t('contact.form.message')}
                   rows={4}
                   className="bg-white/80 border-2 border-transparent focus:border-black focus:bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 text-base sm:text-lg transition-all duration-300 hover-lift resize-none"
                 />
@@ -1544,7 +1528,7 @@ export default function SpectraLanding() {
                   className="bg-black text-white hover:bg-gray-800 w-full rounded-lg sm:rounded-xl py-3 sm:py-4 text-base sm:text-lg font-semibold transform hover:scale-105 transition-all duration-300 shadow-xl glow-on-hover"
                   disabled={loading}
                 >
-                  Envoyer le message
+                  {t('contact.form.submit')}
                   <Sparkles className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
                 </Button>
               </form>
@@ -1624,9 +1608,9 @@ export default function SpectraLanding() {
             <div className="flex flex-col md:flex-row justify-between items-center">
               <div className="text-center md:text-left mb-4 md:mb-0">
                 <p className="text-gray-400 mb-2">
-                  © 2025 SPECTRA INNOVATION S.A.R.L. Tous droits réservés.
+                  {t('footer.copyright')}
                 </p>
-                <p className="text-gray-500 text-sm">Adresse   commercial :imm B  appartement 10   étage 2. Jawharat madina Av maghreb arabi rabat
+                <p className="text-gray-500 text-sm">{t('footer.address')}
                 </p>
                 <p className="text-gray-500 text-sm">
                   EMAIL: spectrainnovationcontact@gmail.com - TÉLÉPHONE: +212 7 08 81 99 99
@@ -1636,9 +1620,9 @@ export default function SpectraLanding() {
                 </p>
               </div>
               <div className="flex space-x-6 text-sm">
-                <a href="#" className="text-gray-400 hover:text-[#ddbea9] transition-colors">Politique de confidentialité</a>
-                <a href="#" className="text-gray-400 hover:text-[#ddbea9] transition-colors">Mentions légales</a>
-                <a href="#" className="text-gray-400 hover:text-[#ddbea9] transition-colors">CGV</a>
+                <a href="#" className="text-gray-400 hover:text-[#ddbea9] transition-colors">{t('footer.privacy')}</a>
+                <a href="#" className="text-gray-400 hover:text-[#ddbea9] transition-colors">{t('footer.legal')}</a>
+                <a href="#" className="text-gray-400 hover:text-[#ddbea9] transition-colors">{t('footer.terms')}</a>
               </div>
             </div>
           </div>

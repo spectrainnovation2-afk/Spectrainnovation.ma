@@ -1,0 +1,189 @@
+{
+  "nav": {
+    "home": "HOME",
+    "about": "ABOUT",
+    "services": "OUR SERVICES",
+    "sectors": "BUSINESS SECTORS",
+    "contact": "CONTACT"
+  },
+  "hero": {
+    "title": "SPECTRA",
+    "subtitle": "INNOVATION",
+    "tagline": "Event management at the service of your ambitions",
+    "marquee": "INNOVATION & CREATIVITY   •   EXCELLENCE & EXPERTISE   •   TAILOR-MADE EVENTS   •   COMPLETE TECHNICAL SOLUTIONS   •   EVENT PASSION   •   SPECTRA INNOVATION   •   CONNECTING BRANDS TO HUMANS"
+  },
+  "about": {
+    "title": "WHO IS",
+    "titleItalic": "SPECTRA?",
+    "description": "is a strategic and creative communication consulting agency led by brand experts.",
+    "stats": {
+      "events": "EVENTS",
+      "years": "YEARS",
+      "satisfaction": "SATISFACTION"
+    },
+    "readMore": "Read More",
+    "readLess": "See Less",
+    "history": {
+      "title": "Our Story",
+      "text1": "For over 10 years, SPECTRA INNOVATION has been supporting companies in realizing their most ambitious events. Our technical expertise and passion for innovation allow us to transform each project into a memorable experience.",
+      "text2": "We combine creativity, cutting-edge technology, and personalized service to offer tailor-made solutions that exceed our clients' expectations.",
+      "mission": {
+        "title": "🎯 Our Mission",
+        "text": "Connecting brands to humans through exceptional event experiences."
+      },
+      "vision": {
+        "title": "🚀 Our Vision",
+        "text": "To be the reference partner for event innovation in Morocco and Africa."
+      }
+    }
+  },
+  "approach": {
+    "title": "OUR APPROACH",
+    "card1": {
+      "title": "#3 TRIBE BRAND",
+      "subtitle": "PERSONALITY",
+      "text": "Define a brand personality consistent with tribe members to initiate contact and connection"
+    },
+    "card2": {
+      "title": "#4 PURPOSE",
+      "subtitle": "ADVOCACY",
+      "text": "Initiate discussion around the cause and become its leader"
+    },
+    "card3": {
+      "title": "#1 TRIBE",
+      "subtitle": "BEHAVIOR",
+      "text": "Understand the behavior of tribe members, their passions, their claims, their personality..."
+    }
+  },
+  "values": {
+    "title": "OUR VALUES",
+    "creativity": {
+      "title": "CREATIVITY",
+      "text": "We shape memorable experiences by imagining, orchestrating, and enhancing every detail of your events."
+    },
+    "excellence": {
+      "title": "EXCELLENCE",
+      "text": "Our commitment is not limited to planning; we guarantee you a diversity of services for an exceptional event."
+    },
+    "proximity": {
+      "title": "PROXIMITY",
+      "text": "Each project for us is a unique opportunity to create unforgettable memories, fully adapted to your needs."
+    }
+  },
+  "services": {
+    "title": "OUR",
+    "titleItalic": "SERVICES",
+    "subtitle": "Complete technical solutions to transform your events into exceptional experiences",
+    "list": {
+      "ledScreens": {
+        "title": "LED SCREENS",
+        "description": "Giant LED screens for events, exhibitions, concerts, and conferences. High brightness and resolution."
+      },
+      "touchScreens": {
+        "title": "TOUCH SCREENS, TOTEMS & INTERACTIVE KIOSKS",
+        "description": "Interactive touch screens, totems, and kiosks for stands, exhibitions, and digital animations."
+      },
+      "stands": {
+        "title": "CUSTOM STANDS",
+        "description": "Rental and design of custom stands adapted to your brand image."
+      },
+      "eventMaterial": {
+        "title": "EVENT & CONFERENCE EQUIPMENT",
+        "description": "Rental of event and conference equipment and translation: furniture, booths, microphones, headsets…"
+      },
+      "advertising": {
+        "title": "PROMOTIONAL ITEMS & PRINTING",
+        "description": "Promotional items, custom supports, digital and offset printing."
+      },
+      "planning": {
+        "title": "EVENT PLANNING",
+        "description": "Planning of corporate and public events, project management from A to Z."
+      },
+      "ticketing": {
+        "title": "TICKETING MANAGEMENT",
+        "description": "Ticketing management for your events, digital solutions, and access control."
+      },
+      "sound": {
+        "title": "SOUND & LIGHTING",
+        "description": "Rental of sound equipment, professional lighting, and special effects for all your events."
+      },
+      "tents": {
+        "title": "TENTS & MARQUEES",
+        "description": "Rental of tents, marquees, and structures for outdoor events."
+      }
+    }
+  },
+  "philosophy": {
+    "title": "OUR",
+    "titleItalic": "PHILOSOPHY",
+    "subtitle": "EMOTION CREATORS",
+    "heading": "EVENT MANAGEMENT AT THE SERVICE OF YOUR AMBITIONS",
+    "text1": "Event management is much more than simply organizing events: it's the art of creating unique experiences that leave a lasting impression and enhance the image of a brand, institution, or product.",
+    "text2": "Our role is to imagine, design, and implement tailor-made technical and logistical solutions to transform each project into an unforgettable moment.",
+    "stats": {
+      "expertise": "YEARS OF EXPERTISE",
+      "events": "EVENTS CREATED",
+      "satisfaction": "SATISFACTION"
+    }
+  },
+  "whoIsSpectra": {
+    "title": "WHO IS SPECTRA INNOVATION?",
+    "description": "is a Moroccan agency specialized in event management. With experience in all stages of organizing your events throughout Morocco. Our commitment is to offer you personalized solutions and tailor-made activities for your event.",
+    "stats": {
+      "experience": "Years of experience",
+      "events": "Events completed"
+    },
+    "learnMore": "Learn more"
+  },
+  "sectors": {
+    "title": "OUR BUSINESS SECTORS",
+    "list": [
+      "CONGRESSES",
+      "PROFESSIONAL EXHIBITIONS",
+      "PRODUCT LAUNCHES",
+      "CEREMONIES",
+      "PUBLIC EVENTS",
+      "SEMINARS",
+      "PRESS CONFERENCES",
+      "PROMOTIONS",
+      "EXHIBITIONS",
+      "SPORTS EVENTS",
+      "CULTURAL EVENTS",
+      "CORPORATE EVENTS"
+    ],
+    "cta": "View all our projects"
+  },
+  "partners": {
+    "title": "OUR PARTNERS",
+    "subtitle": "Discover our trusted partners who accompany us in our mission of excellence"
+  },
+  "contact": {
+    "title": "CONTACT US",
+    "followUs": "Follow us",
+    "form": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "phone": "Phone",
+      "subject": "Subject",
+      "message": "Message",
+      "submit": "Send message",
+      "sending": "Sending message...",
+      "success": "Your message has been sent successfully!",
+      "error": "An error occurred while sending the message."
+    }
+  },
+  "whatsapp": {
+    "tooltip": "Contact us on WhatsApp"
+  },
+  "footer": {
+    "copyright": "© 2025 SPECTRA INNOVATION S.A.R.L. All rights reserved.",
+    "address": "Business address: Building B, Apartment 10, Floor 2. Jawharat Madina, Av Maghreb Arabi, Rabat",
+    "privacy": "Privacy Policy",
+    "legal": "Legal Notice",
+    "terms": "Terms & Conditions"
+  },
+  "modal": {
+    "close": "Close modal"
+  }
+}

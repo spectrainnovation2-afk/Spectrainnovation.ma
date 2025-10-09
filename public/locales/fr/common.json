@@ -1,0 +1,189 @@
+{
+  "nav": {
+    "home": "ACCUEIL",
+    "about": "À PROPOS",
+    "services": "NOS SERVICES",
+    "sectors": "SECTEURS D'ACTIVITÉ",
+    "contact": "CONTACT"
+  },
+  "hero": {
+    "title": "SPECTRA",
+    "subtitle": "INNOVATION",
+    "tagline": "L'événementiel au service de vos ambitions",
+    "marquee": "INNOVATION & CRÉATIVITÉ   •   EXCELLENCE & EXPERTISE   •   ÉVÉNEMENTS SUR MESURE   •   SOLUTIONS TECHNIQUES COMPLÈTES   •   PASSION ÉVÉNEMENTIELLE   •   SPECTRA INNOVATION   •   CONNECTING BRANDS TO HUMANS"
+  },
+  "about": {
+    "title": "QUI EST",
+    "titleItalic": "SPECTRA ?",
+    "description": "est une agence de conseil en communication stratégique et créative pilotée par des experts de la marque.",
+    "stats": {
+      "events": "ÉVÉNEMENTS",
+      "years": "ANNÉES",
+      "satisfaction": "SATISFACTION"
+    },
+    "readMore": "Lire Plus",
+    "readLess": "Voir Moins",
+    "history": {
+      "title": "Notre Histoire",
+      "text1": "Depuis plus de 10 ans, SPECTRA INNOVATION accompagne les entreprises dans la réalisation de leurs événements les plus ambitieux. Notre expertise technique et notre passion pour l'innovation nous permettent de transformer chaque projet en une expérience mémorable.",
+      "text2": "Nous combinons créativité, technologie de pointe et service personnalisé pour offrir des solutions sur mesure qui dépassent les attentes de nos clients.",
+      "mission": {
+        "title": "🎯 Notre Mission",
+        "text": "Connecter les marques aux humains à travers des expériences événementielles exceptionnelles."
+      },
+      "vision": {
+        "title": "🚀 Notre Vision",
+        "text": "Être le partenaire de référence pour l'innovation événementielle au Maroc et en Afrique."
+      }
+    }
+  },
+  "approach": {
+    "title": "NOTRE APPROCHE",
+    "card1": {
+      "title": "#3 TRIBE BRAND",
+      "subtitle": "PERSONALITY",
+      "text": "Définir pour la marque une personnalité cohérente avec les membres de la tribu pour initier le contact et la connexion"
+    },
+    "card2": {
+      "title": "#4 PURPOSE",
+      "subtitle": "ADVOCACY",
+      "text": "Initier la discussion autour du combat et en devenir leader"
+    },
+    "card3": {
+      "title": "#1 TRIBE",
+      "subtitle": "BEHAVIOR",
+      "text": "Comprendre le comportement des membres de la tribu, leurs passions, leurs revendications, leur personnalité..."
+    }
+  },
+  "values": {
+    "title": "NOS VALEURS",
+    "creativity": {
+      "title": "CRÉATIVITÉ",
+      "text": "Nous façonnons des expériences mémorables en imaginant, orchestrant et sublimant chaque détail de vos événements."
+    },
+    "excellence": {
+      "title": "EXCELLENCE",
+      "text": "Notre engagement ne se limite pas à la planification, nous vous garantissons une diversité de prestations pour un événement exceptionnel."
+    },
+    "proximity": {
+      "title": "PROXIMITÉ",
+      "text": "Chaque projet pour nous est une opportunité unique de créer des souvenirs inoubliables, entièrement adapté à vos besoins."
+    }
+  },
+  "services": {
+    "title": "NOS",
+    "titleItalic": "SERVICES",
+    "subtitle": "Des solutions techniques complètes pour transformer vos événements en expériences exceptionnelles",
+    "list": {
+      "ledScreens": {
+        "title": "ÉCRANS LED",
+        "description": "Écrans LED géants pour événements, salons, concerts et conférences. Haute luminosité et résolution."
+      },
+      "touchScreens": {
+        "title": "ÉCRANS TACTILES, TOTEMS & BORNES INTERACTIFS",
+        "description": "Écrans tactiles interactifs, totems et bornes pour stands, salons et animations digitales."
+      },
+      "stands": {
+        "title": "STANDS PERSONNALISÉS",
+        "description": "Location et conception de stands personnalisés adaptés à votre image de marque."
+      },
+      "eventMaterial": {
+        "title": "MATÉRIEL ÉVÉNEMENTIEL & CONFÉRENCE",
+        "description": "Location de matériel événementiel, de conférence et de traduction : mobilier, cabines, micros, casques…"
+      },
+      "advertising": {
+        "title": "OBJETS PUBLICITAIRES & IMPRESSION",
+        "description": "Objets publicitaires, supports personnalisés, impression numérique et offset."
+      },
+      "planning": {
+        "title": "PLANIFICATION D'ÉVÉNEMENTS",
+        "description": "Planification d'événements corporatifs et grand public, gestion de projet de A à Z."
+      },
+      "ticketing": {
+        "title": "GESTION DE LA BILLETTERIE",
+        "description": "Gestion de la billetterie pour vos événements, solutions digitales et contrôle d'accès."
+      },
+      "sound": {
+        "title": "SONORISATION & ÉCLAIRAGE",
+        "description": "Location de matériel de sonorisation, éclairage professionnel et effets spéciaux pour tous vos événements."
+      },
+      "tents": {
+        "title": "CHAPITEAUX & DALOTS",
+        "description": "Location de chapiteaux, tentes, dalots et structures pour événements extérieurs."
+      }
+    }
+  },
+  "philosophy": {
+    "title": "NOTRE",
+    "titleItalic": "PHILOSOPHIE",
+    "subtitle": "CRÉATEUR D'ÉMOTIONS",
+    "heading": "L'ÉVÉNEMENTIEL AU SERVICE DE VOS AMBITIONS",
+    "text1": "L'événementiel est bien plus qu'une simple organisation de manifestations : c'est l'art de créer des expériences uniques qui marquent les esprits et valorisent l'image d'une marque, d'une institution ou d'un produit.",
+    "text2": "Notre rôle est d'imaginer, concevoir et mettre en œuvre des solutions techniques et logistiques sur mesure pour transformer chaque projet en un moment inoubliable.",
+    "stats": {
+      "expertise": "ANNÉES D'EXPERTISE",
+      "events": "ÉVÉNEMENTS CRÉÉS",
+      "satisfaction": "SATISFACTION"
+    }
+  },
+  "whoIsSpectra": {
+    "title": "QUI EST SPECTRA INNOVATION ?",
+    "description": "est une agence marocaine spécialisée dans l'événementiel. Forte d'une expérience dans toutes les étapes d'organisation de vos événements partout au Maroc. Notre engagement est de vous offrir des solutions personnalisées et des activités sur mesure pour votre événement.",
+    "stats": {
+      "experience": "Années d'expérience",
+      "events": "Événements réalisés"
+    },
+    "learnMore": "En savoir plus"
+  },
+  "sectors": {
+    "title": "NOS SECTEURS D'ACTIVITÉ",
+    "list": [
+      "CONGRÈS",
+      "SALONS PROFESSIONNELS",
+      "LANCEMENTS PRODUITS",
+      "CÉRÉMONIES",
+      "ÉVÉNEMENTS GRAND PUBLIC",
+      "SÉMINAIRES",
+      "CONFÉRENCES DE PRESSE",
+      "PROMOTIONS",
+      "EXPOSITIONS",
+      "ÉVÉNEMENTS SPORTIFS",
+      "ÉVÉNEMENTS CULTURELS",
+      "ÉVÉNEMENTS CORPORATIFS"
+    ],
+    "cta": "Voir tous nos projets"
+  },
+  "partners": {
+    "title": "NOS PARTENAIRES",
+    "subtitle": "Découvrez nos partenaires de confiance qui nous accompagnent dans notre mission d'excellence"
+  },
+  "contact": {
+    "title": "CONTACTEZ-NOUS",
+    "followUs": "Suivez-nous",
+    "form": {
+      "firstName": "Nom",
+      "lastName": "Prénom",
+      "email": "Email",
+      "phone": "Téléphone",
+      "subject": "Sujet",
+      "message": "Message",
+      "submit": "Envoyer le message",
+      "sending": "Envoi du message en cours...",
+      "success": "Votre message a été envoyé avec succès !",
+      "error": "Une erreur est survenue lors de l'envoi du message."
+    }
+  },
+  "whatsapp": {
+    "tooltip": "Contactez-nous sur WhatsApp"
+  },
+  "footer": {
+    "copyright": "© 2025 SPECTRA INNOVATION S.A.R.L. Tous droits réservés.",
+    "address": "Adresse   commercial :imm B  appartement 10   étage 2. Jawharat madina Av maghreb arabi rabat",
+    "privacy": "Politique de confidentialité",
+    "legal": "Mentions légales",
+    "terms": "CGV"
+  },
+  "modal": {
+    "close": "Fermer le modal"
+  }
+}
