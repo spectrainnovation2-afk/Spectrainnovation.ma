@@ -11,7 +11,8 @@ import { useLanguage } from "@/contexts/LanguageContext"
 import { LanguageSwitcher } from "@/components/LanguageSwitcher"
 
 export default function SpectraLanding() {
-  const { t, isLoading } = useLanguage()
+  
+  const { t, isLoading, language, isRTL } = useLanguage()
   const [isScrolled, setIsScrolled] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -21,6 +22,7 @@ export default function SpectraLanding() {
   const formRef = useRef<HTMLFormElement>(null)
   const [loading, setLoading] = useState(false)
   const [statusMsg, setStatusMsg] = useState<null | { type: "sending" | "success" | "error", text: string }>(null)
+  const [animationKey, setAnimationKey] = useState(0)
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
@@ -94,6 +96,11 @@ export default function SpectraLanding() {
       window.removeEventListener("keydown", handleKeyDown)
     }
   }, [])
+
+  // Réinitialiser l'animation des partenaires lors du changement de langue
+  useEffect(() => {
+    setAnimationKey(prev => prev + 1)
+  }, [language])
 
  
 
@@ -173,56 +180,65 @@ export default function SpectraLanding() {
             : "bg-black/70 backdrop-blur-sm shadow-lg"
         }`}
       >
-        <nav className="container mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-3 group">
-            <div className="flex flex-col">
-              <img src="/logo.png" alt="SPECTRA INNOVATION" className="w-40 h-auto" />
-            </div>
-          </div>
+    <nav className="container mx-auto px-6 py-4 flex items-center justify-between">
+  <div className="flex items-center space-x-3 group">
+    <div className="flex flex-col">
+      <img src="/logo.png" alt="SPECTRA INNOVATION" className="w-40 h-auto" />
+    </div>
+  </div>
 
-          {/* Menu Desktop */}
-          <div className="hidden md:flex items-center space-x-8">
-            {[
-              { key: "nav.home", section: "home" },
-              { key: "nav.about", section: "about" },
-              { key: "nav.services", section: "services" },
-              { key: "nav.sectors", section: "sectors" },
-              { key: "nav.contact", section: "contact" }
-            ].map((item, index) => (
-              <a 
-                key={item.key}
-                href={`#${item.section}`} 
-                className="relative text-white hover:text-[#ddbea9] transition-all duration-300 group py-2 px-3 font-medium"
-                style={{ 
-                  animationDelay: `${index * 0.1}s`,
-                  textShadow: '0 1px 3px rgba(0,0,0,0.5)'
-                }}
-                onClick={(e) => {
-                  e.preventDefault()
-                  scrollToSection(item.section)
-                }}
-              >
-                <span className="relative z-10">{t(item.key)}</span>
-                <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#ddbea9] to-[#c9a96e] group-hover:w-full transition-all duration-300"></div>
-              </a>
-            ))}
-            <LanguageSwitcher />
-          </div>
+  {/* Menu Desktop (masqué sur mobile et tablette) */}
+  <div className="hidden lg:flex items-center space-x-8">
+    {[
+      { key: "nav.home", section: "home" },
+      { key: "nav.about", section: "about" },
+      { key: "nav.services", section: "services" },
+      { key: "nav.sectors", section: "sectors" },
+      { key: "nav.contact", section: "contact" }
+    ].map((item, index) => (
+      <a 
+        key={item.key}
+        href={`#${item.section}`} 
+        className="relative text-white hover:text-[#ddbea9] transition-all duration-300 group py-2 px-3 font-medium"
+        style={{ 
+          animationDelay: `${index * 0.1}s`,
+          textShadow: '0 1px 3px rgba(0,0,0,0.5)'
+        }}
+        onClick={(e) => {
+          e.preventDefault()
+          scrollToSection(item.section)
+        }}
+      >
+        <span className="relative z-10">{t(item.key)}</span>
+        <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#ddbea9] to-[#c9a96e] group-hover:w-full transition-all duration-300"></div>
+      </a>
+    ))}
+    {/* Language Switcher Desktop */}
+    <div className="hidden lg:flex ml-4">
+      <LanguageSwitcher />
+    </div>
+  </div>
 
-          {/* Bouton Menu Mobile */}
-          <button 
-            onClick={toggleMobileMenu}
-            className="md:hidden text-white hover:text-[#ddbea9] transition-colors duration-300 z-[110] relative p-2 rounded-lg bg-black/30 backdrop-blur-sm"
-            style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}
-          >
-            {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
-        </nav>
+  {/* Mobile + Tablet: Language Switcher + Hamburger */}
+  <div className="flex items-center lg:hidden space-x-2">
+    <div>
+      <LanguageSwitcher />
+    </div>
+    <button 
+      onClick={toggleMobileMenu}
+      className="text-white hover:text-[#ddbea9] transition-colors duration-300 z-[110] relative p-2 rounded-lg bg-black/30 backdrop-blur-sm"
+      style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}
+    >
+      {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+    </button>
+  </div>
+</nav>
 
         {/* Menu Mobile - Utilisation des classes CSS personnalisées */}
         <div className={`mobile-menu-centered transition-all duration-300 md:hidden ${
           isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
         }`}>
+           
           {/* Bouton fermer en haut à droite */}
           <button 
             onClick={toggleMobileMenu}
@@ -230,6 +246,7 @@ export default function SpectraLanding() {
           >
             
           </button>
+        
 
           {/* Container principal avec classes personnalisées */}
           <div className="mobile-menu-content">
@@ -237,6 +254,10 @@ export default function SpectraLanding() {
             <div className="mb-8">
               <img src="/logo.png" alt="SPECTRA INNOVATION" className="w-40 h-auto mx-auto" />
             </div>
+
+            
+
+            
 
             {/* Items du menu centrés */}
             <div className="space-y-6">
@@ -262,9 +283,7 @@ export default function SpectraLanding() {
             </div>
             
             {/* Language Switcher in Mobile Menu */}
-            <div className="flex justify-center mt-8">
-              <LanguageSwitcher />
-            </div>
+         
             
             {/* Ligne décorative centrée */}
             <div className="w-32 h-1 bg-gradient-to-r from-[#ddbea9] to-[#c9a96e] rounded-full mt-8 mx-auto"></div>
@@ -280,95 +299,149 @@ export default function SpectraLanding() {
 
       {/* Hero Section - Design moderne inspiré We brand */}
       <section id="home" className="relative min-h-screen bg-black flex items-center justify-center overflow-hidden">
-        {/* Animation de fond dynamique */}
-        <div className="absolute inset-0">
-          {/* Formes géométriques animées */}
-          <div className="absolute top-10 right-10 w-96 h-96 bg-gradient-to-br from-[#ffe8d6]/20 to-transparent rounded-full animate-float blur-3xl"></div>
-          <div className="absolute bottom-10 left-10 w-80 h-80 bg-gradient-to-tr from-[#ddbea9]/30 to-transparent rounded-full animate-bounce-slow blur-2xl"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] border border-white/5 rounded-full animate-spin-slow"></div>
-          
-          {/* Lignes diagonales dynamiques */}
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#ffe8d6] to-transparent animate-shimmer"></div>
-          <div className="absolute bottom-0 right-0 w-full h-1 bg-gradient-to-l from-transparent via-[#ddbea9] to-transparent animate-shimmer" style={{ animationDelay: '2s' }}></div>
-          
-          {/* Particules flottantes */}
-          {[...Array(12)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-1 h-1 bg-[#ffe8d6] rounded-full animate-twinkle"
-              style={{
-                left: `${10 + i * 7}%`,
-                top: `${20 + (i % 3) * 25}%`,
-                animationDelay: `${i * 0.3}s`,
-                animationDuration: `${2 + i * 0.2}s`
+      {/* Animation de fond dynamique */}
+      <div className="absolute inset-0">
+        {/* Formes géométriques animées */}
+        <div className="absolute top-10 right-10 w-96 h-96 bg-gradient-to-br from-[#ffe8d6]/20 to-transparent rounded-full animate-float blur-3xl"></div>
+        <div className="absolute bottom-10 left-10 w-80 h-80 bg-gradient-to-tr from-[#ddbea9]/30 to-transparent rounded-full animate-bounce-slow blur-2xl"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] border border-white/5 rounded-full animate-spin-slow"></div>
+        {/* Lignes diagonales dynamiques */}
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#ffe8d6] to-transparent animate-shimmer"></div>
+        <div className="absolute bottom-0 right-0 w-full h-1 bg-gradient-to-l from-transparent via-[#ddbea9] to-transparent animate-shimmer" style={{ animationDelay: '2s' }}></div>
+        {/* Particules flottantes */}
+        {[...Array(12)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-[#ffe8d6] rounded-full animate-twinkle"
+            style={{
+              left: `${10 + i * 7}%`,
+              top: `${20 + (i % 3) * 25}%`,
+              animationDelay: `${i * 0.3}s`,
+              animationDuration: `${2 + i * 0.2}s`
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Contenu principal */}
+      <div className="relative z-10 text-center max-w-7xl mx-auto px-6">
+        {/* Titre principal avec effet typewriter moderne */}
+        <div className="mb-8 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+          <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white mb-4 leading-none tracking-tight">
+            <span className="inline-block relative">
+              {t('hero.title')}
+              <div className="absolute -bottom-2 left-0 w-full h-2 bg-gradient-to-r from-[#ffe8d6] to-[#ddbea9] transform origin-left scale-x-0 animate-expand-width" style={{ animationDelay: '1s' }}></div>
+            </span>
+          </h1>
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-light text-[#ffe8d6] tracking-wider italic">
+            {t('hero.subtitle')}
+          </h2>
+        </div>
+
+        {/* Sous-titre avec animation */}
+        <div className="mb-12 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
+          <div className="relative max-w-4xl mx-auto">
+            <p className="text-xl md:text-2xl lg:text-3xl text-gray-300 font-light leading-relaxed">
+              {t('hero.tagline')}
+            </p>
+            {/* Ligne décorative sous le sous-titre */}
+            <div className="mt-6 flex justify-center">
+              <svg width="200" height="4" viewBox="0 0 200 4" className="overflow-visible">
+                <path 
+                  d="M10,2 Q50,0 100,2 T190,2" 
+                  stroke="#baa99bff" 
+                  strokeWidth="2" 
+                  fill="none" 
+                  className="animate-draw-line"
+                  strokeLinecap="round"
+                  style={{ animationDelay: '1.5s' }}
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Barre diagonale visible sur toute la page */}
+      <div
+        className={`absolute left-0 w-screen overflow-visible pointer-events-none z-10
+          ${language === "ar" ? "right-0 left-auto" : "bottom-30"}
+        `}
+        style={
+          language === "ar"
+            ? { top: "unset", bottom: "7.5rem" } // adapte la hauteur si tu veux
+            : {}
+        }
+        dir={language === "ar" ? "rtl" : "ltr"}
+      >
+        <div
+          className={`w-[300%] bg-white shadow-2xl transform
+            ${language === "ar"
+              ? "rotate-6 translate-x-[33%] translate-y-6 h-16"
+              : "-rotate-6 -translate-x-[33%] translate-y-6 h-13"
+            }
+          `}
+        >
+          <div className={`flex items-center h-full ${language === "ar" ? "px-16" : "px-8"}`}>
+            <div 
+              key={`marquee-${animationKey}`}
+              className={`whitespace-nowrap text-black font-black tracking-wider ${isRTL ? 'animate-marquee-ultra-fast-rtl' : 'animate-marquee-ultra-fast-ltr'}`}
+              style={language === "ar" ? { 
+                paddingLeft: "2rem", 
+                paddingRight: "2rem",
+                minWidth: "max-content",
+                fontSize: "1.75rem",
+                fontFamily: "Arial, 'Segoe UI', Tahoma, sans-serif",
+                fontWeight: "900",
+                letterSpacing: "0.1em"
+              } : {
+                fontSize: "1.5rem"
               }}
-            />
-          ))}
-        </div>
-
-        {/* Contenu principal */}
-        <div className="relative z-10 text-center max-w-7xl mx-auto px-6">
-          {/* Logo/Icône principale avec effet moderne */}
-         
-          
-          {/* Titre principal avec effet typewriter moderne */}
-          <div className="mb-8 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white mb-4 leading-none tracking-tight">
-              <span className="inline-block relative">
-                {t('hero.title')}
-                <div className="absolute -bottom-2 left-0 w-full h-2 bg-gradient-to-r from-[#ffe8d6] to-[#ddbea9] transform origin-left scale-x-0 animate-expand-width" style={{ animationDelay: '1s' }}></div>
-              </span>
-            </h1>
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-light text-[#ffe8d6] tracking-wider italic">
-              {t('hero.subtitle')}
-            </h2>
-          </div>
-
-          {/* Sous-titre avec animation */}
-          <div className="mb-12 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
-            <div className="relative max-w-4xl mx-auto">
-              <p className="text-xl md:text-2xl lg:text-3xl text-gray-300 font-light leading-relaxed">
-                {t('hero.tagline')}
-              </p>
-              {/* Ligne décorative sous le sous-titre */}
-              <div className="mt-6 flex justify-center">
-                <svg width="200" height="4" viewBox="0 0 200 4" className="overflow-visible">
-                  <path 
-                    d="M10,2 Q50,0 100,2 T190,2" 
-                    stroke="#baa99bff" 
-                    strokeWidth="2" 
-                    fill="none" 
-                    className="animate-draw-line"
-                    strokeLinecap="round"
-                    style={{ animationDelay: '1.5s' }}
-                  />
-                </svg>
-              </div>
-            </div>
-          </div>
-
-         
-
-          {/* Boutons d'action modernes */}
-          
-
-          
-        </div>
-
-        {/* Barre diagonale visible sur toute la page */}
-        <div className="absolute bottom-30 left-0 w-screen overflow-visible pointer-events-none z-10">
-          <div className="w-[300%] h-13 bg-white shadow-2xl transform -rotate-6 -translate-x-[33%] translate-y-6">
-            <div className="flex items-center h-full px-8">
-              <div className="whitespace-nowrap text-black font-black text-2xl tracking-wider animate-marquee-ultra-fast">
-                {t('hero.marquee')} • {t('hero.marquee')} • 
-              </div>
+            >
+              {t('hero.marquee')} • {t('hero.marquee')} • {t('hero.marquee')} • 
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Overlay gradient moderne */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/80 pointer-events-none"></div>
-      </section>
+      {/* CSS intégré pour les animations marquee optimisées pour l'arabe */}
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @keyframes marquee-ultra-fast-ltr {
+            0% { transform: translateX(100vw); }
+            100% { transform: translateX(-100vw); }
+          }
+          
+          @keyframes marquee-ultra-fast-rtl {
+            0% { transform: translateX(-100vw); }
+            100% { transform: translateX(100vw); }
+          }
+          
+          .animate-marquee-ultra-fast-ltr {
+            animation: marquee-ultra-fast-ltr 30s linear infinite;
+          }
+          
+          .animate-marquee-ultra-fast-rtl {
+            animation: marquee-ultra-fast-rtl 19s linear infinite;
+            direction: rtl;
+          }
+          
+          /* Force re-render pour les animations lors du changement de langue */
+          .rtl .animate-marquee-ultra-fast-rtl {
+            animation: none;
+            animation: marquee-ultra-fast-rtl 19s linear infinite;
+          }
+          
+          .ltr .animate-marquee-ultra-fast-ltr {
+            animation: none;
+            animation: marquee-ultra-fast-ltr 30s linear infinite;
+          }
+        `
+      }} />
+
+      {/* Overlay gradient moderne */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/80 pointer-events-none"></div>
+    </section>
 
       {/* Section Qui est SPECTRA - Style moderne #ffe8d6 */}
       <section id="about" className="py-24 bg-gradient-to-br from-[#ffe8d6] via-[#f5dcc7] to-[#ffe8d6] relative overflow-hidden">
@@ -1317,13 +1390,16 @@ export default function SpectraLanding() {
     </div>
 
     
-    {/* Bande de défilement des logos */}
+    {/* Bande de défilement des logos - Optimisée pour RTL */}
     <div className="overflow-hidden bg-white/60 backdrop-blur-sm rounded-2xl p-6 shadow-inner border border-slate-200/50">
       {/* Carrousel infini fluide pour tous les logos */}
-      <div className="flex animate-scroll-infinite space-x-8 w-max">
+      <div 
+        key={`partners-scroll-${animationKey}`}
+        className={`flex animate-scroll-infinite w-max ${isRTL ? 'rtl-scroll' : 'ltr-scroll'}`}
+      >
         {[...Array(2)].flatMap(() => [1,2,3,4,5,6,7,8,9,10,11]).map((logo, index) => (
           <div
-            key={`scroll-all-${index}`}
+            key={`scroll-all-${index}-${language}-${animationKey}`}
             className="flex-shrink-0 w-26 h-26 flex items-center justify-center"
           >
             <img
@@ -1340,12 +1416,17 @@ export default function SpectraLanding() {
   
   </div>
 
-  {/* CSS intégré pour les animations */}
+  {/* CSS intégré pour les animations - Optimisé pour RTL */}
   <style dangerouslySetInnerHTML={{
     __html: `
-      @keyframes scroll-infinite {
+      @keyframes scroll-infinite-ltr {
         0% { transform: translateX(0); }
         100% { transform: translateX(-80%); }
+      }
+      
+      @keyframes scroll-infinite-rtl {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(80%); }
       }
       
       @keyframes fade-in {
@@ -1354,7 +1435,17 @@ export default function SpectraLanding() {
       }
       
       .animate-scroll-infinite {
-        animation: scroll-infinite 40s linear infinite;
+        animation: scroll-infinite-ltr 40s linear infinite;
+      }
+      
+      .rtl-scroll {
+        animation: scroll-infinite-rtl 40s linear infinite;
+        direction: rtl;
+      }
+      
+      .ltr-scroll {
+        animation: scroll-infinite-ltr 40s linear infinite;
+        direction: ltr;
       }
       
       .animate-fade-in {
@@ -1363,12 +1454,29 @@ export default function SpectraLanding() {
       
       @media (max-width: 768px) {
         .animate-scroll-infinite {
-          animation: scroll-infinite 50s linear infinite;
+          animation: scroll-infinite-ltr 50s linear infinite;
+        }
+        .rtl-scroll {
+          animation: scroll-infinite-rtl 50s linear infinite;
+        }
+        .ltr-scroll {
+          animation: scroll-infinite-ltr 50s linear infinite;
         }
       }
       
       .group:hover .group-hover\\:animate-pulse {
         animation: pulse 10s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+      
+      /* Force re-render pour les animations lors du changement de langue */
+      .rtl .rtl-scroll {
+        animation: none;
+        animation: scroll-infinite-rtl 40s linear infinite;
+      }
+      
+      .ltr .ltr-scroll {
+        animation: none;
+        animation: scroll-infinite-ltr 40s linear infinite;
       }
     `
   }} />
