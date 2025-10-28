@@ -1734,6 +1734,21 @@ export default function SpectraLanding() {
               </div>
             </div>
           </div>
+          
+          {/* Developer Credit */}
+          <div className="border-t border-gray-800 pt-6 mt-6 text-center">
+            <p className="text-gray-400 text-sm">
+              Developed with excellence and passion by{' '}
+              <a 
+                href="https://mehdicodes.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-[#ddbea9] hover:text-[#c9a96e] transition-colors font-semibold"
+              >
+                Mehdi Codes
+              </a>
+            </p>
+          </div>
         </div>
       </footer>
     </div>
