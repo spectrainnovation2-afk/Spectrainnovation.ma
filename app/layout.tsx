@@ -19,6 +19,25 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <title>Spectra Innovation | Agence Marketing Digital, Développement Web & Communication à Rabat Maroc</title>
+        <meta name="description" content="Spectra Innovation : agence experte en marketing digital, création de sites web, publicité, SEO, branding et communication à Rabat, Maroc. Boostez votre visibilité et vos conversions avec notre équipe !" />
+        <meta name="keywords" content="Spectra Innovation, marketing digital, agence web, Rabat, Maroc, communication, publicité, SEO, création site internet, branding, réseaux sociaux, Google Ads, développement web" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://spectrainnovation.ma" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="author" content="Spectra Innovation" />
+        <link rel="icon" href="/favicon.ico" />
+        {/* Open Graph */}
+        <meta property="og:title" content="Spectra Innovation | Agence Marketing Digital & Web à Rabat Maroc" />
+        <meta property="og:description" content="Agence experte en marketing digital, création de sites web, publicité, SEO, branding et communication à Rabat, Maroc." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://spectrainnovation.ma" />
+        <meta property="og:image" content="/og-image.jpg" />
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Spectra Innovation | Agence Marketing Digital & Web à Rabat Maroc" />
+        <meta name="twitter:description" content="Agence experte en marketing digital, création de sites web, publicité, SEO, branding et communication à Rabat, Maroc." />
+        <meta name="twitter:image" content="/og-image.jpg" />
         {/* Google tag (gtag.js) */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17676323420"></script>
         <script dangerouslySetInnerHTML={{
