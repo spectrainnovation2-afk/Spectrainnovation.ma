@@ -97,6 +97,19 @@ export default function SpectraLanding() {
     }
   }, [])
 
+  // Google Ads conversion event snippet for successful form submission
+  useEffect(() => {
+    if (statusMsg?.type === "success") {
+      if (typeof window !== "undefined" && typeof (window as any).gtag === "function") {
+        (window as any).gtag('event', 'conversion', {
+          'send_to': 'AW-17676323420/I4BKCOjriLgbENyU3exB',
+          'value': 1.0,
+          'currency': 'MAD'
+        });
+      }
+    }
+  }, [statusMsg]);
+
   // Réinitialiser l'animation des partenaires lors du changement de langue
   useEffect(() => {
     setAnimationKey(prev => prev + 1)
