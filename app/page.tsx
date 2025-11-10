@@ -615,6 +615,25 @@ export default function SpectraLanding() {
 
             {/* Contenu à droite - Notre Approche avec design exact */}
             <div className="lg:w-1/2 animate-slide-in-right">
+              {/* Texte d'introduction */}
+              <div className="mb-8 space-y-4">
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-4xl">{t('approach.intro.flag')}</span>
+                  <h3 className="text-2xl md:text-3xl font-bold text-black italic">
+                    {t('approach.intro.heading')}
+                  </h3>
+                </div>
+                <p className="text-gray-700 text-lg leading-relaxed">
+                  {t('approach.intro.text1')}
+                </p>
+                <p className="text-gray-700 text-lg leading-relaxed">
+                  {t('approach.intro.text2')}
+                </p>
+                <p className="text-gray-800 text-lg font-semibold leading-relaxed">
+                  {t('approach.intro.text3')}
+                </p>
+              </div>
+
               {/* Titre principal avec ligne jaune stylée */}
               <div className="mb-12">
                 <h2 className="text-5xl md:text-6xl font-black text-black mb-4 leading-tight italic">

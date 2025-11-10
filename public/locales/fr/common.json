@@ -10,7 +10,7 @@
     "title": "SPECTRA",
     "subtitle": "INNOVATION",
     "tagline": "L'événementiel au service de vos ambitions",
-    "marquee": "INNOVATION & CRÉATIVITÉ   •   EXCELLENCE & EXPERTISE   •   ÉVÉNEMENTS SUR MESURE   •   SOLUTIONS TECHNIQUES COMPLÈTES   •   PASSION ÉVÉNEMENTIELLE   •   SPECTRA INNOVATION   •   CONNECTING BRANDS TO HUMANS"
+    "marquee": "Boostez vos événements avec nos services   •   ✅ Devis immédiat & gratuit   •   🎪 Création d'espace Fun Zone pour la CAN   •   📦 Location de matériel événementiel   •   🛠️ Fabrication & restauration de stands personnalisés   •   💡 Installation d'écrans LED & éclairage   •   🖨️ Impression de supports publicitaires   •   🚚 Transport & montage sur site   •   📣 Offres promotionnelles limitées   •   📷 Photographie et capsules best off"
   },
   "about": {
     "title": "QUI EST",
@@ -39,6 +39,13 @@
   },
   "approach": {
     "title": "NOTRE APPROCHE",
+    "intro": {
+      "flag": "🇲🇦",
+      "heading": "Imaginez ce moment…",
+      "text1": "Imaginez ce moment où tout est parfait, la lumière, l'ambiance et chaque détail en harmonie. Aucun stress, aucune pression, seulement la fierté d'un événement réussi.",
+      "text2": "Chez Spectra Innovation, nous transformons vos idées en expériences inoubliables grâce à une organisation précise, une équipe expérimentée et un matériel haut de gamme. Nous garantissons des événements livrés dans les délais, avec une qualité irréprochable et une consultation gratuite partout au Maroc.",
+      "text3": "Avec Spectra Innovation, chaque détail compte pour faire de votre événement un moment exceptionnel."
+    },
     "card1": {
       "title": "#3 TRIBE BRAND",
       "subtitle": "PERSONALITY",

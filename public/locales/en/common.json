@@ -10,7 +10,7 @@
     "title": "SPECTRA",
     "subtitle": "INNOVATION",
     "tagline": "Event management at the service of your ambitions",
-    "marquee": "INNOVATION & CREATIVITY   •   EXCELLENCE & EXPERTISE   •   TAILOR-MADE EVENTS   •   COMPLETE TECHNICAL SOLUTIONS   •   EVENT PASSION   •   SPECTRA INNOVATION   •   CONNECTING BRANDS TO HUMANS"
+    "marquee": "Boost your events with our services   •   ✅ Instant & free quote   •   🎪 Fun Zone creation for CAN   •   📦 Event equipment rental   •   🛠️ Custom stand fabrication & restoration   •   💡 LED screen & lighting installation   •   🖨️ Advertising material printing   •   🚚 Transport & on-site assembly   •   📣 Limited promotional offers   •   📷 Photography and best-of capsules"
   },
   "about": {
     "title": "WHO IS",
@@ -39,6 +39,13 @@
   },
   "approach": {
     "title": "OUR APPROACH",
+    "intro": {
+      "flag": "🇲🇦",
+      "heading": "Imagine this moment…",
+      "text1": "Imagine that moment when everything is perfect, the lighting, the ambiance, and every detail in harmony. No stress, no pressure, only the pride of a successful event.",
+      "text2": "At Spectra Innovation, we transform your ideas into unforgettable experiences through precise organization, an experienced team, and high-end equipment. We guarantee events delivered on time, with impeccable quality and free consultation throughout Morocco.",
+      "text3": "With Spectra Innovation, every detail matters to make your event an exceptional moment."
+    },
     "card1": {
       "title": "#3 TRIBE BRAND",
       "subtitle": "PERSONALITY",
