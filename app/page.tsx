@@ -10,6 +10,7 @@ import emailjs from "emailjs-com"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { LanguageSwitcher } from "@/components/LanguageSwitcher"
 import Link from "next/link"
+import Image from "next/image"
 
 export default function SpectraLanding() {
   
@@ -602,7 +603,17 @@ export default function SpectraLanding() {
           <div className="flex flex-col lg:flex-row items-center gap-16">
             {/* Image à gauche - Bureau moderne avec logo We brand */}
             <div className="lg:w-1/2 animate-slide-in-left">
-              <div className="relative group">
+              {/* Morocco Flag - Large size matching the image prominence */}
+              <div className="flex justify-center">
+                  <Image 
+                    src="/FlagMorocco.svg" 
+                    alt="Morocco Flag" 
+                    width={280} 
+                    height={220} 
+                    className="rounded-xdl"
+                  />
+              </div>
+              <div className="relative group  mt-8">
                 <img
                   src="/service11.jpeg"
                   alt="Bureau moderne We brand - SPECTRA INNOVATION"
@@ -611,6 +622,7 @@ export default function SpectraLanding() {
                 {/* Logo We brand overlay - exactement comme dans l'image */}
                
               </div>
+              
             </div>
 
             {/* Contenu à droite - Notre Approche avec design exact */}
@@ -618,7 +630,6 @@ export default function SpectraLanding() {
               {/* Texte d'introduction */}
               <div className="mb-8 space-y-4">
                 <div className="flex items-center gap-2 mb-4">
-                  <span className="text-4xl">{t('approach.intro.flag')}</span>
                   <h3 className="text-2xl md:text-3xl font-bold text-black italic">
                     {t('approach.intro.heading')}
                   </h3>
