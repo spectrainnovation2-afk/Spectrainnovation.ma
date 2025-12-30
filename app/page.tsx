@@ -1569,7 +1569,7 @@ export default function SpectraLanding() {
                   <div className="w-10 h-10 sm:w-16 sm:h-16 bg-black rounded-full flex items-center justify-center transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-xl">
                     <Mail className="h-6 w-6 sm:h-8 sm:w-8 text-[#ddbea9]" />
                   </div>
-                  <span className="text-black text-base sm:text-xl font-medium group-hover:text-gray-800 transition-colors">spectrainnovationcontact@gmail.com</span>
+                  <span className="text-black text-base sm:text-xl font-medium group-hover:text-gray-800 transition-colors">contact@spectrainnovation.ma</span>
                 </div>
                 <div className="flex items-center space-x-4 sm:space-x-6 group hover-lift">
                   <div className="w-10 h-10 sm:w-16 sm:h-16 bg-black rounded-full flex items-center justify-center transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-xl">
@@ -1609,7 +1609,7 @@ export default function SpectraLanding() {
                     <Youtube className="w-4 h-4 sm:w-5 sm:h-5 text-[#ff0000] group-hover:text-[#b20000] transition-colors" />
                   </a>
                   <a 
-                    href="mailto:spectrainnovationcontact@gmail.com"
+                    href="mailto:contact@spectrainnovation.ma"
                     rel="noopener noreferrer"
                     className="w-9 h-9 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center hover:bg-[#ea4335]/10 transition-all duration-300 cursor-pointer transform hover:scale-110 shadow-lg animate-fade-in-up group"
                     style={{ animationDelay: '0s' }}
@@ -1759,7 +1759,7 @@ export default function SpectraLanding() {
                 <Youtube className="w-5 h-5 text-black group-hover:text-gray-800 transition-colors" />
               </a>
               <a 
-                href="mailto:spectrainnovationcontact@gmail.com"
+                href="mailto:contact@spectrainnovation.ma"
                 rel="noopener noreferrer"
                 className="w-12 h-12 bg-white rounded-full flex items-center justify-center hover:bg-[#ea4335]/10 transition-all duration-300 cursor-pointer transform hover:scale-110 shadow-lg animate-fade-in-up group"
                 style={{ animationDelay: '0s' }}
@@ -1799,7 +1799,7 @@ export default function SpectraLanding() {
                 <p className="text-gray-500 text-sm">{t('footer.address')}
                 </p>
                 <p className="text-gray-500 text-sm">
-                  EMAIL: spectrainnovationcontact@gmail.com - TÉLÉPHONE: +212 7 08 81 99 99
+                  EMAIL: contact@spectrainnovation.ma - TÉLÉPHONE: +212 7 08 81 99 99
                 </p>
                 <p className="text-gray-500 text-xs mt-2">
                   Attijariwafa Bank: 007810001595000000382656 - ICE: 003088410000047 - IF: 52614142 - RC: 162183
