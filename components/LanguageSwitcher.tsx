@@ -1,64 +1,47 @@
-"use client"
+'use client'
 
-import React from 'react'
-import Image from 'next/image'
-import { useLanguage } from '@/contexts/LanguageContext'
+import Link from 'next/link'
+import type { Locale } from '@/lib/site-config'
+import { cn } from '@/lib/utils'
 
-export const LanguageSwitcher: React.FC = () => {
-  const { language, setLanguage } = useLanguage()
+const flags: Record<Locale, string> = {
+  fr: '/flags/fr.svg',
+  en: '/flags/gb.svg',
+  ar: '/flags/ma.svg',
+}
 
-  const languages = [
-    { code: 'fr', flag: '/flags/fr.svg', label: 'FR', alt: 'French flag' },
-    { code: 'en', flag: '/flags/gb.svg', label: 'EN', alt: 'British flag' },
-    { code: 'ar', flag: '/flags/ma.svg', label: 'AR', alt: 'Moroccan flag' }
-  ]
+const labels: Record<Locale, string> = {
+  fr: 'FR',
+  en: 'EN',
+  ar: 'AR',
+}
+
+export function LanguageSwitcher({
+  locale,
+  getHref,
+}: {
+  locale: Locale
+  getHref: (locale: Locale) => string
+}) {
+  const locales: Locale[] = ['fr', 'en', 'ar']
 
   return (
-    <div className="flex items-center justify-center">
-      {/* Version Desktop/Tablet - Boutons horizontaux */}
-      <div className="hidden sm:flex items-center bg-black/80 backdrop-blur-sm rounded-full p-1 border border-white/20 shadow-lg">
-        {languages.map((lang) => (
-          <button
-            key={lang.code}
-            onClick={() => setLanguage(lang.code as 'fr' | 'en' | 'ar')}
-            className={`flex items-center space-x-2 px-3 py-2 rounded-full transition-all duration-300 ${
-              language === lang.code
-                ? 'bg-[#ddbea9] text-black font-bold shadow-lg scale-105'
-                : 'text-white hover:bg-white/10 hover:scale-105'
-            }`}
-            aria-label={`Switch to ${lang.alt}`}
-          >
-            <img 
-              src={lang.flag}
-              alt={lang.alt}
-              className="w-5 h-4 object-cover rounded-sm"
-            />
-            <span className="text-sm font-semibold">{lang.label}</span>
-          </button>
-        ))}
-      </div>
-
-      {/* Version Mobile - Compact sans icône */}
-      <div className="flex sm:hidden items-center bg-black/80 backdrop-blur-sm rounded-full p-1 border border-white/20 shadow-lg">
-        {languages.map((lang) => (
-          <button
-            key={lang.code}
-            onClick={() => setLanguage(lang.code as 'fr' | 'en' | 'ar')}
-            className={`flex items-center justify-center px-2 py-1.5 rounded-full transition-all duration-300 ${
-              language === lang.code
-                ? 'bg-[#ddbea9] text-black font-bold shadow-lg'
-                : 'text-white hover:bg-white/10'
-            }`}
-            aria-label={`Switch to ${lang.alt}`}
-          >
-            <img 
-              src={lang.flag}
-              alt={lang.alt}
-              className="w-5 h-4 object-cover rounded-sm"
-            />
-          </button>
-        ))}
-      </div>
+    <div className="inline-flex items-center rounded-full border border-white/20 bg-black/40 p-1" role="group" aria-label="Language">
+      {locales.map((l) => (
+        <Link
+          key={l}
+          href={getHref(l)}
+          hrefLang={l}
+          className={cn(
+            'flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-xs font-bold transition-colors',
+            locale === l ? 'bg-[#ddbea9] text-black' : 'text-white hover:text-[#ddbea9]'
+          )}
+          aria-current={locale === l ? 'true' : undefined}
+        >
+          <img src={flags[l]} alt="" className="w-4 h-3 object-cover rounded-sm" aria-hidden />
+          {labels[l]}
+        </Link>
+      ))}
     </div>
   )
 }

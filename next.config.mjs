@@ -4,10 +4,23 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
   images: {
-    unoptimized: true,
+    formats: ['image/avif', 'image/webp'],
+    remotePatterns: [
+      { protocol: 'https', hostname: 'i.ytimg.com' },
+      { protocol: 'https', hostname: 'img.youtube.com' },
+    ],
+  },
+  async redirects() {
+    return [
+      {
+        source: '/index.html',
+        destination: '/fr',
+        permanent: true,
+      },
+    ]
   },
 }
 

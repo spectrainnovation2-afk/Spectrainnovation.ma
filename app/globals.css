@@ -413,7 +413,7 @@
   animation: number-count 1s ease-out;
 }
 
-/* Style moderne pour les éléments jaunes */
+/* Style moderne pour les Ã©lÃ©ments jaunes */
 .yellow-section {
   background: linear-gradient(135deg, #fbbf24, #f59e0b, #fbbf24);
   background-size: 400% 400%;
@@ -660,7 +660,7 @@
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
-/* Menu Mobile Centré */
+/* Menu Mobile CentrÃ© */
 .mobile-menu-centered {
   position: fixed;
   top: 30px;
@@ -683,4 +683,67 @@
   text-align: center;
   padding: 2rem;
   max-width: 90vw;
+}
+
+@keyframes partners-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-partners-scroll {
+  animation: partners-scroll 40s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-partners-scroll {
+    animation: none;
+  }
+}
+
+html[dir='rtl'] .animate-partners-scroll {
+  animation-name: partners-scroll-rtl;
+}
+
+@keyframes partners-scroll-rtl {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(50%); }
+}
+
+/* Focus & a11y */
+:focus-visible {
+  outline: 2px solid #c9a96e;
+  outline-offset: 2px;
+}
+
+/* Cinematic YouTube hero — cover crop, hide chrome edges */
+.hero-video-frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.hero-video-frame iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 56.25vw; /* 16:9 */
+  min-height: 100%;
+  min-width: 177.78vh;
+  transform: translate(-50%, -50%);
+  border: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .hero-video-frame iframe {
+    /* Extra scale crops YouTube UI chrome on mobile */
+    transform: translate(-50%, -50%) scale(1.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-video-frame {
+    display: none !important;
+  }
 }
