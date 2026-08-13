@@ -1,7 +1,9 @@
 import { siteConfig, type Locale } from '@/lib/site-config'
-import { services } from '@/lib/content/services'
-import { articles } from '@/lib/content/blog'
-import { cities } from '@/lib/content/cities'
+import {
+  blogLocaleSlugs,
+  cityLocaleSlugs,
+  serviceNavItems,
+} from '@/lib/content/locale-slug-maps'
 
 /** Shared path segments (French-primary, consistent across locales for maintainability). */
 export const paths = {
@@ -36,31 +38,27 @@ export function switchLocalePath(
 
   // /services/[slug]
   if (segments[0] === 'services' && segments[1]) {
-    const service = services.find(
-      (s) => s.slugs[fromLocale] === segments[1] || s.slug === segments[1]
+    const service = serviceNavItems.find(
+      (s) => s[fromLocale] === segments[1] || s.slug === segments[1]
     )
     if (service) {
-      return `/${toLocale}/services/${service.slugs[toLocale]}`
+      return `/${toLocale}/services/${service[toLocale]}`
     }
   }
 
   // /blog/[slug]
   if (segments[0] === 'blog' && segments[1]) {
-    const article = articles.find(
-      (a) => a.slugs[fromLocale] === segments[1] || a.slug === segments[1]
-    )
+    const article = blogLocaleSlugs.find((a) => a[fromLocale] === segments[1])
     if (article) {
-      return `/${toLocale}/blog/${article.slugs[toLocale]}`
+      return `/${toLocale}/blog/${article[toLocale]}`
     }
   }
 
   // city pages at root of locale
   if (segments.length === 1) {
-    const city = cities.find(
-      (c) => c.slugs[fromLocale] === segments[0] || c.slug === segments[0]
-    )
+    const city = cityLocaleSlugs.find((c) => c[fromLocale] === segments[0])
     if (city) {
-      return `/${toLocale}/${city.slugs[toLocale]}`
+      return `/${toLocale}/${city[toLocale]}`
     }
   }
 

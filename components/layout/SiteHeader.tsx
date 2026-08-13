@@ -9,7 +9,7 @@ import { siteConfig } from '@/lib/site-config'
 import { getLocalizedPath, switchLocalePath } from '@/lib/i18n/routing'
 import type { Dictionary } from '@/lib/i18n/dictionaries'
 import { LanguageSwitcher } from '@/components/LanguageSwitcher'
-import { services, tLoc, getServicePath } from '@/lib/content/services'
+import { serviceNavItems } from '@/lib/content/locale-slug-maps'
 import { cn } from '@/lib/utils'
 
 export function SiteHeader({ locale, dict }: { locale: Locale; dict: Dictionary }) {
@@ -124,13 +124,13 @@ export function SiteHeader({ locale, dict }: { locale: Locale; dict: Dictionary 
                 >
                   <div className="rounded-2xl bg-black/98 border border-[#ddbea9]/25 shadow-2xl p-5 backdrop-blur-md">
                     <div className="grid grid-cols-2 gap-2">
-                      {services.map((s) => (
+                      {serviceNavItems.map((s) => (
                         <Link
                           key={s.slug}
-                          href={getServicePath(s, locale)}
+                          href={`/${locale}/services/${s[locale]}`}
                           className="rounded-xl px-3 py-2.5 text-sm text-white/85 hover:bg-[#ddbea9]/15 hover:text-[#ddbea9] transition-colors"
                         >
-                          {tLoc(s.shortTitle, locale)}
+                          {s.shortTitle[locale]}
                         </Link>
                       ))}
                     </div>
@@ -222,13 +222,13 @@ export function SiteHeader({ locale, dict }: { locale: Locale; dict: Dictionary 
             </button>
             {mobileServicesOpen && (
               <div className="ps-3 pb-2 border-b border-white/10">
-                {services.map((s) => (
+                {serviceNavItems.map((s) => (
                   <Link
                     key={s.slug}
-                    href={getServicePath(s, locale)}
+                    href={`/${locale}/services/${s[locale]}`}
                     className="block py-2.5 text-base text-white/80 hover:text-[#ddbea9]"
                   >
-                    {tLoc(s.shortTitle, locale)}
+                    {s.shortTitle[locale]}
                   </Link>
                 ))}
                 <Link href={servicesHref} className="block py-2.5 text-sm font-bold text-[#ddbea9]">

@@ -720,6 +720,12 @@ html[dir='rtl'] .animate-partners-scroll {
   position: absolute;
   inset: 0;
   overflow: hidden;
+  pointer-events: none;
+}
+
+.hero-video-mount {
+  position: absolute;
+  inset: 0;
 }
 
 .hero-video-frame iframe {
@@ -738,7 +744,11 @@ html[dir='rtl'] .animate-partners-scroll {
 @media (max-width: 768px) {
   .hero-video-frame iframe {
     /* Extra scale crops YouTube UI chrome on mobile */
-    transform: translate(-50%, -50%) scale(1.35);
+    width: 100vw;
+    height: 56.25vw;
+    min-height: 120%;
+    min-width: 200vh;
+    transform: translate(-50%, -50%) scale(1.45);
   }
 }
 
